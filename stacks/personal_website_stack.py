@@ -14,7 +14,7 @@ class PersonalWebsiteStack(cdk.Stack):
             f'{construct_id}-react-bucket',
             bucket_name='ben-groseclose-react-website',
             public_read_access=True,
-            website_index_document='public/index.html'
+            website_index_document='index.html'
         )
 
         s3_deployment.BucketDeployment(
