@@ -1,3 +1,6 @@
 aws-cdk.core>=1.137.0
 aws-cdk.aws_s3>=1.137.0
+aws-cdk.pipelines>=1.137.0
+aws-cdk.aws_sqs>=1.137.0
+aws-cdk.aws_codepipeline_actions>=1.137.0
 aws-cdk.assertions>=1.137.0
