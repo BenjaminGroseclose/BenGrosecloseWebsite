@@ -1,8 +1,9 @@
 from aws_cdk import (
   core as cdk,
-  pipelines,
-  aws_codepipeline_actions as pipeline_actions
+  pipelines
 )
+
+from stages.application_stage import ApplicationStage
 
 class PipelineStack(cdk.Stack):
     def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs)-> None:
@@ -26,3 +27,9 @@ class PipelineStack(cdk.Stack):
                                           self_mutation=True,
                                           pipeline_name='DeploymentPipeline',
                                           synth=synthStep)
+
+        pipeline.add_stage(ApplicationStage(
+            self,
+            'ApplicationStage',
+            **kwargs
+        ))
