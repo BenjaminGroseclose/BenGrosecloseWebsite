@@ -1,7 +1,8 @@
 from aws_cdk import (
     core as cdk,
     aws_s3 as s3,
-    aws_s3_deployment as s3_deployment
+    aws_s3_deployment as s3_deployment,
+    aws_iam as iam
 )
 
 class PersonalWebsiteStack(cdk.Stack):
@@ -16,6 +17,14 @@ class PersonalWebsiteStack(cdk.Stack):
             public_read_access=True,
             website_index_document='index.html'
         )
+
+        bucket_policy = iam.PolicyStatement(
+            actions=['s3:GetObject'],
+            resources=[bucket.bucket_arn],
+            principals=[iam.AnyPrincipal()]
+        )
+
+        bucket.add_to_resource_policy(bucket_policy)
 
         s3_deployment.BucketDeployment(
             self,
