@@ -9,4 +9,4 @@ class PersonalWebsiteStack(cdk.Stack):
     def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        queue = sqs.Queue(self, 'test-queue', queue_name='Test Queue')
+        queue = sqs.Queue(self, 'test-queue', queue_name='test-queue')
