@@ -20,7 +20,7 @@ class PersonalWebsiteStack(cdk.Stack):
 
         bucket_policy = iam.PolicyStatement(
             actions=['s3:GetObject'],
-            resources=[bucket.bucket_arn],
+            resources=[f'{bucket.bucket_arn}'],
             principals=[iam.AnyPrincipal()]
         )
 
