@@ -16,15 +16,8 @@ class PersonalWebsiteStack(cdk.Stack):
             bucket_name='ben-groseclose-website',
             public_read_access=True,
             website_index_document='index.html',
+            block_public_access=s3.BlockPublicAccess(restrict_public_buckets=False)
         )
-
-        bucket_policy = iam.PolicyStatement(
-            actions=['s3:GetObject'],
-            resources=[f'{bucket.bucket_arn}'],
-            principals=[iam.AnyPrincipal()]
-        )
-
-        bucket.add_to_resource_policy(bucket_policy)
 
         s3_deployment.BucketDeployment(
             self,
