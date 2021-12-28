@@ -13,9 +13,9 @@ class PersonalWebsiteStack(cdk.Stack):
         bucket = s3.Bucket(
             self,
             f'{construct_id}-react-bucket',
-            bucket_name='ben-groseclose-react-website',
+            bucket_name='ben-groseclose-website',
             public_read_access=True,
-            website_index_document='index.html'
+            website_index_document='index.html',
         )
 
         bucket_policy = iam.PolicyStatement(
