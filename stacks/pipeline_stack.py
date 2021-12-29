@@ -13,7 +13,7 @@ class PipelineStack(cdk.Stack):
             'Synth',
             install_commands=['npm install -g aws-cdk@1.137.0', 
                               'python -m pip install -r requirements.txt'],
-            commands=['cdk synth'],
+            commands=['cdk synth', 'cd code/ui/ben-groseclose-ui', 'npm run build'],
             input=pipelines.CodePipelineSource.connection(
                 repo_string="BenjaminGroseclose/BenGrosecloseWebsite",
                 branch='main',
