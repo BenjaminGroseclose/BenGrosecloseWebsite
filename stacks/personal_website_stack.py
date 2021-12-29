@@ -1,7 +1,8 @@
 from aws_cdk import (
     core as cdk,
     aws_s3 as s3,
-    aws_s3_deployment as s3_deployment
+    aws_s3_deployment as s3_deployment,
+    aws_cloudfront as cloudfront
 )
 
 class PersonalWebsiteStack(cdk.Stack):
@@ -23,4 +24,17 @@ class PersonalWebsiteStack(cdk.Stack):
             f'{construct_id}-bucket-deployment',
             destination_bucket=bucket,
             sources=[s3_deployment.Source.asset('code/ui/ben-groseclose-ui/build')]
+        )
+
+        cloudfront.CloudFrontWebDistribution(
+            self,
+            f'{construct_id}-cloudfront',
+            origin_configs=[
+                cloudfront.SourceConfiguration(
+                    s3_origin_source=cloudfront.S3OriginConfig(
+                        s3_bucket_source=bucket
+                    ),
+                    behaviors=[cloudfront.Behavior(is_default_behavior=True)]
+                )
+            ]
         )
