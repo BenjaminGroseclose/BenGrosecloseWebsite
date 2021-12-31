@@ -57,7 +57,12 @@ class PersonalWebsiteStack(cdk.Stack):
                     ),
                     behaviors=[cloudfront.Behavior(is_default_behavior=True)]
                 )
-            ]
+            ],
+            viewer_certificate=cloudfront.ViewerCertificate.from_acm_certificate(
+                certificate=cert,
+                aliases=[f'www.{domain_name}', domain_name],
+                ssl_method=cloudfront.SSLMethod.SNI
+            )
         )
 
         route53.ARecord(
