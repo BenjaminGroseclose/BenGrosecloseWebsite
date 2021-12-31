@@ -26,6 +26,7 @@ class PersonalWebsiteStack(cdk.Stack):
             self,
             f'{construct_id}-cert',
             hosted_zone=hosted_zone,
+            validation=acm.CertificateValidation.from_dns(hosted_zone=hosted_zone),
             region='us-east-2',
             domain_name=domain_name
         )
