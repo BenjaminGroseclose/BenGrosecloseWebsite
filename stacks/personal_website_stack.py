@@ -22,12 +22,10 @@ class PersonalWebsiteStack(cdk.Stack):
             comment=f'{domain_name} hosted zone'
         )
 
-        cert = acm.DnsValidatedCertificate(
+        cert = acm.Certificate(
             self,
             f'{construct_id}-cert',
-            hosted_zone=hosted_zone,
             validation=acm.CertificateValidation.from_dns(hosted_zone=hosted_zone),
-            region='us-east-2',
             domain_name=domain_name
         )
 
@@ -46,6 +44,8 @@ class PersonalWebsiteStack(cdk.Stack):
             destination_bucket=bucket,
             sources=[s3_deployment.Source.asset('code/ui/ben-groseclose-ui/build')]
         )
+        
+        cloud_front_oai = cloudfront.OriginAccessIdentity(self, f'{construct_id}-oai')
 
         distribution = cloudfront.CloudFrontWebDistribution(
             self,
@@ -53,7 +53,8 @@ class PersonalWebsiteStack(cdk.Stack):
             origin_configs=[
                 cloudfront.SourceConfiguration(
                     s3_origin_source=cloudfront.S3OriginConfig(
-                        s3_bucket_source=bucket
+                        s3_bucket_source=bucket,
+                        origin_access_identity=cloud_front_oai
                     ),
                     behaviors=[cloudfront.Behavior(is_default_behavior=True)]
                 )
@@ -69,6 +70,7 @@ class PersonalWebsiteStack(cdk.Stack):
             self,
             f'{construct_id}-arecord',
             zone=hosted_zone,
-            record_name=domain_name,
             target=route53.RecordTarget.from_alias(targets.CloudFrontTarget(distribution))
         )
+
+        bucket.grant_read(cloud_front_oai.grant_principal)
