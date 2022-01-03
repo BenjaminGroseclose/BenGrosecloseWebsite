@@ -36,6 +36,12 @@ const Home = () => {
       </Box>
       <Divider sx={{ marginTop: 3, marginBottom: 3 }} />
       <Box>
+        <Typography variant='h5'>
+          Contact Me
+        </Typography>
+        <Typography variant='body1'>
+
+        </Typography>
       </Box>
     </Box>
   )

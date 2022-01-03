@@ -8,7 +8,7 @@ const MainMenu = (props) => {
     <Box id="main-menu">
       <AppBar color='primary'>
         <Toolbar>
-          <Typography variant='h6' sx={{ marginRight: 2 }}>
+          <Typography variant='h5' sx={{ marginRight: 2 }}>
             Ben Groseclose
           </Typography>
           <Button href='/' color='inherit'>Home</Button>

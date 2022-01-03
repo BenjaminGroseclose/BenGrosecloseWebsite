@@ -15,7 +15,7 @@ class PersonalWebsiteStack(cdk.Stack):
 
         domain_name = 'bengroseclose.com'
 
-        hosted_zone = route53.HostedZone(
+        hosted_zone = route53.PublicHostedZone(
             self,
             f'{construct_id}-hosted-zone',
             zone_name=domain_name,

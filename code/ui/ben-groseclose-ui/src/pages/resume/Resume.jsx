@@ -12,7 +12,7 @@ const Resume = () => {
       end: 'Present',
       title: 'Software Developer',
       descriptions: [
-        'Using Angular 7 to create and support a new website.',
+        'Using Angular 7 to create and support a patient portal website',
         'Developing efficient microservices using C# to provide value to several different applications.',
         'Supporting mobile development on both Android and iOS platforms with Java, Kotlin, and Swift.',
         'Working in an agile development environment following SAFe methodologies.',
@@ -65,8 +65,9 @@ const Resume = () => {
         <Chip label="ASP .NET" variant='filled' sx={{ margin: 1 }} />
         <Chip label="Angular" variant='filled' sx={{ margin: 1 }} />
         <Chip label="React" variant='filled' sx={{ margin: 1 }} />
-        <Chip label="Android" variant='filled' sx={{ margin: 1 }} />
-        <Chip label="Java / Kotlin" variant='filled' sx={{ margin: 1 }} />
+        <Chip label="Android Development" variant='filled' sx={{ margin: 1 }} />
+        <Chip label="Java" variant='filled' sx={{ margin: 1 }} />
+        <Chip label="Kotlin" variant='filled' sx={{ margin: 1 }} />
         <Chip label="Python" variant='filled' sx={{ margin: 1 }} />
         <Chip label="Agile" variant='filled' sx={{ margin: 1 }} />
         <Chip label="SAFe" variant='filled' sx={{ margin: 1 }} />
