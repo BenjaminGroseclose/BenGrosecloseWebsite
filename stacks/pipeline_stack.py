@@ -23,7 +23,7 @@ class PipelineStack(cdk.Stack):
             input=pipelines.CodePipelineSource.connection(
                 repo_string="BenjaminGroseclose/BenGrosecloseWebsite",
                 branch='main',
-                connection_arn='arn:aws:codestar-connections:us-east-2:349097218527:connection/28f47611-9c10-4300-9f47-9d3f7299433d',
+                connection_arn='arn:aws:codestar-connections:us-east-1:349097218527:connection/3452d62d-edc4-4688-b5de-9c91d41249b1',
                 trigger_on_push=True
             )
         )

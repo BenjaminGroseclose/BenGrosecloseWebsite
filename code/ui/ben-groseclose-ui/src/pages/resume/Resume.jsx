@@ -28,7 +28,7 @@ const Resume = () => {
       title: 'Software Developer Intern',
       descriptions: [
         'Provided new features to Amrock’s mobile application using Java and Kotlin.',
-        'Sought ways to improve the team’s process and the mobile and in-house Windows Applications.',
+        'Sought ways to improve the agile team’s process and the in-house mobile and windows Applications.',
         'Addressed tech debt within the applications and worked towards proper architecture.',
         'Contributed to implementing a C# Microservices using ASP.NET.',
         'Developed on an enterprise ESCROW Windows Application using C#.',
