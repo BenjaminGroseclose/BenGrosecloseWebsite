@@ -26,6 +26,9 @@ class PersonalWebsiteStack(cdk.Stack):
             self,
             f'{construct_id}-cert',
             validation=acm.CertificateValidation.from_dns(hosted_zone=hosted_zone),
+            subject_alternative_names=[
+                f'www.{domain_name}'
+            ],
             domain_name=domain_name
         )
 
