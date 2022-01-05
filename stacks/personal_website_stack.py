@@ -82,7 +82,13 @@ class PersonalWebsiteStack(cdk.Stack):
                 certificate=cert,
                 aliases=[f'www.{domain_name}', domain_name],
                 ssl_method=cloudfront.SSLMethod.SNI
-            )
+            ),
+            error_configurations=[cloudfront.CfnDistribution.CustomErrorResponseProperty(
+                error_code=404,
+                error_caching_min_ttl=10,
+                response_page_path='/index.html',
+                response_code=200
+            )]
         )
 
         route53.ARecord(
