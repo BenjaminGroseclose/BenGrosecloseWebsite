@@ -38,7 +38,23 @@ class PersonalWebsiteStack(cdk.Stack):
             bucket_name=domain_name,
             public_read_access=True,
             removal_policy=cdk.RemovalPolicy.DESTROY,
-            website_index_document='index.html'
+            website_index_document='index.html',
+            website_routing_rules=[
+                s3.RoutingRule(
+                    condition=s3.RoutingRuleCondition(
+                        http_error_code_returned_equals='404'
+                    ),
+                    host_name=domain_name,
+                    replace_key=s3.ReplaceKey.prefix_with('#/')
+                ),
+                s3.RoutingRule(
+                    condition=s3.RoutingRuleCondition(
+                        http_error_code_returned_equals='403'
+                    ),
+                    host_name=domain_name,
+                    replace_key=s3.ReplaceKey.prefix_with('#/')
+                )
+            ]
         )
 
         s3_deployment.BucketDeployment(
