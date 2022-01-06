@@ -39,18 +39,18 @@ const Resume = () => {
 
   const education = [
     {
-      school: 'Central Michigan University',
-      start: 'Sept 2013',
-      end: 'May 2018',
-      degree: "Bachelor's Degree",
-      major: 'Computer Science'
-    },
-    {
       school: 'Grand Valley State Univesity',
       start: 'Jan 2021',
       end: 'Present',
       degree: "Master's Degree",
       major: 'Applied Computer Science'
+    },
+    {
+      school: 'Central Michigan University',
+      start: 'Sept 2013',
+      end: 'May 2018',
+      degree: "Bachelor's Degree",
+      major: 'Computer Science'
     }
   ]
 

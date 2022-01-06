@@ -5,7 +5,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const MainMenu = (props) => {
   return (
-    <Box id="main-menu">
+    <Box id="main-menu" sx={{ flexGrow: 1 }}>
       <AppBar color='primary'>
         <Toolbar>
           <Typography variant='h5' sx={{ marginRight: 2 }}>

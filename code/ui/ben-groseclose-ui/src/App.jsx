@@ -5,8 +5,20 @@ import MainMenu from './shared/components/main-menu/MainMenu';
 import { deepOrange } from '@mui/material/colors';
 import Resume from './pages/resume/Resume';
 import Projects from './pages/projects/Projects';
+import { useState, useEffect } from 'react';
+import MobileMenu from './shared/components/mobile-menu/MobileMenu';
 
 function App() {
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 900px)');
+    const listener = () => setIsDesktop(media.matches);
+    listener();
+    window.addEventListener('resize', listener);
+
+    return () => window.removeEventListener('resize', listener);
+  }, [isDesktop]);
+
   const theme = createTheme({
     palette: {
       primary: deepOrange,
@@ -22,7 +34,7 @@ function App() {
       }}
     >
       <ThemeProvider theme={theme}>
-        <MainMenu />
+        { isDesktop ? <MainMenu/> : <MobileMenu /> }
         <BrowserRouter>
           <Routes>
             <Route path="/" exact element={<Home />} />
