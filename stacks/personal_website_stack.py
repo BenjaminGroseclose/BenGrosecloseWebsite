@@ -57,13 +57,6 @@ class PersonalWebsiteStack(cdk.Stack):
             ],
             versioned=True
         )
-
-        s3_deployment.BucketDeployment(
-            self,
-            f'{construct_id}-bucket-deployment',
-            destination_bucket=bucket,
-            sources=[s3_deployment.Source.asset('code/ui/ben-groseclose-ui/build')]
-        )
         
         cloud_front_oai = cloudfront.OriginAccessIdentity(self, f'{construct_id}-oai')
 
@@ -90,6 +83,14 @@ class PersonalWebsiteStack(cdk.Stack):
                 response_page_path='/index.html',
                 response_code=200
             )]
+        )     
+
+        s3_deployment.BucketDeployment(
+            self,
+            f'{construct_id}-bucket-deployment',
+            destination_bucket=bucket,
+            sources=[s3_deployment.Source.asset('code/ui/ben-groseclose-ui/build')],
+            distribution=distribution
         )
 
         route53.ARecord(
