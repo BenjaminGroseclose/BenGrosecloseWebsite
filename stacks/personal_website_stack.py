@@ -54,7 +54,8 @@ class PersonalWebsiteStack(cdk.Stack):
                     host_name=domain_name,
                     replace_key=s3.ReplaceKey.prefix_with('#/')
                 )
-            ]
+            ],
+            versioned=True
         )
 
         s3_deployment.BucketDeployment(
