@@ -23,14 +23,12 @@ const Home = () => {
             marginBottom: { xs: 3, md: 0 }
           }}
         >
-          Hello my name is Ben Groseclose, I am from and still live in the great state of Michigan. 
-          Specifically West Olive a small town just outside of Grand Rapids, Michigan.
-          I have been married for 4 years and we recently had our first child, Luke. Some of my hobbies 
-          include sports, video games, technology, and board games. Professionally I currently work for
-          Spectrum Health as a software developer helping to maintain their Patient Communication system 
-          and others applications. Previously I worked for Amrock, a sister company of Quicken Loans 
-          in Detroit. I am currently enrolled at Grand Valley State University for my graduate degree 
-          in applied computer science. My bachelors degree however comes from Central Michigan University.
+          Hello, my name is Ben Groseclose. I am from the great state of Michigan.  I currently reside in West Michigan 
+          with my wife of 4 years and our son Luke, a recent addition to the family. Some things I enjoy include sports, 
+          video games, technolog, and board games. Currently, I work for Spectrum Health as a software developer helping 
+          to maintain their patient communication system and others. Previously, I worked for Amrock, a sister-company of 
+          Quicken Loans. I have a bachelor's degree from Central Michigan University and I am currently enrolled at Grand 
+          Valley State University, pursing a graduate degree in Applied Computer Science.
         </Typography>
         <img src='./images/family.jpg' alt='Family' style={{ maxWidth: '400px', margin: 'auto' }} />
       </Box>
