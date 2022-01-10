@@ -8,4 +8,5 @@ aws-cdk.aws_certificatemanager>=1.137.0
 aws-cdk.aws_route53_targets>=1.137.0
 aws-cdk.aws_codepipeline_actions>=1.137.0
 aws-cdk.aws_s3_deployment>=1.137.0
+aws-cdk.aws_apigateway>=1.137.0
 aws-cdk.assertions>=1.137.0

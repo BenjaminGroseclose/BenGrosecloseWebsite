@@ -1,7 +1,8 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material'
+import { Education } from './models';
 
-const Experience = (props) => {
+const EducationComponent = (education: Education) => {
 
   return (
     <Box sx={{ marginTop: 2, marginBottom: 2 }}>
@@ -11,22 +12,17 @@ const Experience = (props) => {
         justifyContent: 'space-between'
       }}>
         <Typography variant='h6'>
-          {props.company}
+          {education.school}
         </Typography>
         <Typography variant='body2'>
-          {props.start} - {props.end}
+          {education.start} - {education.end}
         </Typography>
       </Box>
-      <Typography variant='subtitle1'>
-        {props.title}
+      <Typography variant='body2'>
+        {education.degree}: {education.major}
       </Typography>
-      {props.descriptions.map((desc, i) => (
-        <Typography key={i} variant='body2' sx={{ marginTop: 1 }}>
-          - {desc}
-        </Typography>
-      ))}
     </Box>
   );
 }
 
-export default Experience
+export default EducationComponent;

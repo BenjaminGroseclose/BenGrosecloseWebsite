@@ -1,11 +1,12 @@
 import { Typography, Box, Chip, Divider } from '@mui/material';
 import React from 'react';
-import Education from './EducationComponent';
-import Experience from './ExperienceComponent';
+import EducationComponent from './EducationComponent';
+import ExperienceComponent from './ExperienceComponent';
+import { Experience, Education } from './models';
 
 const Resume = () => {
 
-  const experience = [
+  const experience: Experience[] = [
     {
       company: 'Spectrum Health',
       start: 'April 2019',
@@ -37,7 +38,7 @@ const Resume = () => {
     }
   ]
 
-  const education = [
+  const education: Education[] = [
     {
       school: 'Grand Valley State Univesity',
       start: 'Jan 2021',
@@ -82,7 +83,7 @@ const Resume = () => {
       {
         experience.map((exp, i) => (
           <Box key={i}>
-            <Experience 
+            <ExperienceComponent 
               company={exp.company}
               start={exp.start}
               end={exp.end}
@@ -100,7 +101,7 @@ const Resume = () => {
       {
         education.map((edu, i) => (
           <Box key={i}>
-            <Education 
+            <EducationComponent 
               school={edu.school}
               start={edu.start}
               end={edu.end}
