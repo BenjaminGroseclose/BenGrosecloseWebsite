@@ -1,4 +1,4 @@
-namespace ChessEngine.Services
+namespace BenGroseclose.API.Services
 {
     public class ChessService : IChessService
     {

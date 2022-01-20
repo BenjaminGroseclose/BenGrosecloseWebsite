@@ -1,4 +1,4 @@
-using ChessEngine.Services;
+using BenGroseclose.API.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +10,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Services
-builder.Services.AddTransient<IChessService, ChessService>();
 
+// Hubs
 builder.Services.AddSignalR();
 
 var app = builder.Build();
@@ -28,5 +28,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<ChessHub>("/chess-engine");
 
 app.Run();

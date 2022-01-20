@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace ChessEngine.Tests;
+namespace BenGroseclose.API.Tests;
 
 public class Tests
 {
