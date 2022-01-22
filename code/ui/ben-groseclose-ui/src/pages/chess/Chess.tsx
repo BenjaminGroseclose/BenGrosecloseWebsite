@@ -1,6 +1,6 @@
 import { Box, Paper, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Piece } from './Constants';
+import { columns, initBoardState, Piece, Position, rows } from './Constants';
 import Tile from './Tile';
 
 const darkTileColor = '#BD9A7A';
@@ -8,12 +8,9 @@ const lightTileColor = '#654321';
 
 const ChessPage = () => {
   const [tiles, setTiles] = useState<any[]>([]);
-  const [pieces, setPieces] = useState<Piece[]>();
+  const [activePieces, setActivePieces] = useState<Piece[]>(initBoardState);
   
   useEffect(() => {
-    const rows = [1, 2, 3, 4, 5, 6, 7, 8];
-    const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-
     let tempTileList = [];
 
     for (let i = 0; i < rows.length; i++) {
@@ -26,62 +23,21 @@ const ChessPage = () => {
           backgroundColor = j % 2 === 1 ? lightTileColor : darkTileColor
         }
 
-        tempTileList.push(<Tile key={`${columns[j]},${rows[i]}`} backgroundColor={backgroundColor} image='' column={columns[j]} row={rows[i]} />);
+        let currentPosition: Position = { column: columns[j], row: rows[i] }
+
+        let piece = initBoardState.find((p) => isSamePosition(p.position, currentPosition));
+
+        tempTileList.push(<Tile key={`${columns[j]},${rows[i]}`} backgroundColor={backgroundColor} piece={piece} column={columns[j]} row={rows[i]} />);
       }
     }
 
-    setTiles(tempTileList)
-    console.log(tempTileList);
+    setTiles(tempTileList);
 
   }, []);
 
-  const ChessBoard = () => {
-    const rows = [1, 2, 3, 4, 5, 6, 7, 8];
-    const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-
-    return (
-      <Paper id="board" elevation={4} sx={{
-        width: 320,
-        height: 320,
-        marginBottom: 4
-      }}>
-        {
-          rows.map((row, n) => {
-            return ( 
-              <Box key={n} sx={{
-                  display: 'flex',
-                  flexDirection: 'row'
-                }}
-              >
-              {
-                columns.map((column, m) => {
-                  let backgroundColor = '';
-                  let image = '';
-
-                  if (row % 2 === 0) {
-                    backgroundColor = m % 2 === 1 ? darkTileColor : lightTileColor
-                  } else {
-                    backgroundColor = m % 2 === 1 ? lightTileColor : darkTileColor
-                  }
-
-                  return (
-                    <Tile
-                      key={`${column}${row}`}
-                      image=''
-                      backgroundColor={backgroundColor}
-                      column={column}
-                      row={row}
-                    />
-                  );
-                })
-              }
-              </Box>
-            );
-            })
-          }
-      </Paper>
-    );
-  };
+  const isSamePosition = (position1: Position, position2: Position): boolean => {
+    return (position1.column === position2.column && position1.row === position2.row);
+  }
 
   return (
     <Box id="chesspage">
@@ -92,8 +48,8 @@ const ChessPage = () => {
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(8, 40px)',
-          gridTemplateRows: 'repeat(8, 40px)'
+          gridTemplateColumns: 'repeat(8, 50px)',
+          gridTemplateRows: 'repeat(8, 50px)'
         }}
       >
 
