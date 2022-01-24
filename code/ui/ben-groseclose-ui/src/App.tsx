@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import MobileMenu from './shared/components/mobile-menu/MobileMenu';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ChessPage from './pages/chess/Chess';
+import Footer from './shared/components/footer/Footer';
 
 function App() {
   const [isDesktop, setIsDesktop] = useState(false);
@@ -28,22 +29,21 @@ function App() {
   })
 
   return (
-    <Box 
-      id="App"
-      sx={{
-        padding: '80px 3% 0 3%'
-      }}
-    >
+    <Box id="App">
       <ThemeProvider theme={theme}>
         { isDesktop ? <MainMenu/> : <MobileMenu /> }
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/resume" element={<Resume />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/chess" element={<ChessPage />} />
-          </Routes>
-        </BrowserRouter>
+        
+        <Box sx={{ padding: '80px 3% 0 3%'}}>
+          <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/resume" element={<Resume />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/chess" element={<ChessPage />} />
+            </Routes>
+          </BrowserRouter>
+        </Box>
+        <Footer />
       </ThemeProvider>
     </Box>
   );
