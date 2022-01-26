@@ -8,7 +8,6 @@ import { useState, useEffect } from 'react';
 import MobileMenu from './shared/components/mobile-menu/MobileMenu';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ChessPage from './pages/chess/Chess';
-import Footer from './shared/components/footer/Footer';
 
 function App() {
   const [isDesktop, setIsDesktop] = useState(false);

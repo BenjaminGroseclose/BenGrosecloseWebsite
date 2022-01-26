@@ -35,7 +35,7 @@ const Home = () => {
           I enjoy spending time with my family especially when we get together at Disney or our family island. My wife's family has been 
           going to Disney since I have known them, and I have come to enjoy my time there. Whether it is going to splash mountain
           or eating amazing food around Epcot it is always a good time. My family island based in the St. Lawerence river is a small 
-          5 acres with an old wooden cabin on it. I have gone there since I was young and hope to continue to go in the future.
+          5 acres with an old wooden cabin on it. I have gone there since I was young.
 
         </Typography>
         <img src='./images/family.jpg' alt='Family' style={{ maxWidth: '400px', margin: 'auto' }} />
@@ -47,7 +47,7 @@ const Home = () => {
         </Typography>
         <Box>
           <Typography variant='subtitle1' sx={{ marginBottom: 2 }}>
-            <u>Spectrum Health</u>
+            <i>Spectrum Health</i>
           </Typography>
 
           <Typography variant='body1'>
@@ -61,7 +61,7 @@ const Home = () => {
           </Typography>
 
           <Typography variant='subtitle1' sx={{ marginBottom: 2, marginTop: 2 }}>
-            <u>Amrock</u>
+            <i>Amrock</i>
           </Typography>
 
           <Typography variant='body1'>
