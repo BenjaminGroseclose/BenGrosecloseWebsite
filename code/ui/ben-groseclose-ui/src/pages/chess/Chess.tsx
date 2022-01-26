@@ -1,4 +1,5 @@
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Icon, IconButton, Typography } from '@mui/material';
+import WifiProtectedSetupIcon from '@mui/icons-material/WifiProtectedSetup';
 import React, { useEffect, useState } from 'react';
 import { columns, initBoardState, Piece, Position, rows } from './Constants';
 import Tile from './Tile';
@@ -39,6 +40,10 @@ const ChessPage = () => {
     return (position1.column === position2.column && position1.row === position2.row);
   }
 
+  const flipBoard = () => {
+    setTiles(tiles.reverse());
+  }
+
   return (
     <Box id="chesspage">
       <Typography variant='h4' sx={{ marginBottom: 3 }}>
@@ -47,14 +52,24 @@ const ChessPage = () => {
 
       <Box
         sx={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(8, 50px)',
-          gridTemplateRows: 'repeat(8, 50px)'
+          display: 'flex',
+          flexDirection: 'column'
         }}
       >
-
-      
-        {tiles}
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(8, 50px)',
+            gridTemplatseRows: 'repeat(8, 50px)'
+          }}
+        >
+          {tiles}
+        </Box>
+        <Box>
+          <IconButton onClick={flipBoard}>
+            <WifiProtectedSetupIcon />
+          </IconButton>
+        </Box>
       </Box>
     </Box>
   );

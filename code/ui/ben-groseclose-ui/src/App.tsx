@@ -43,7 +43,6 @@ function App() {
             </Routes>
           </BrowserRouter>
         </Box>
-        <Footer />
       </ThemeProvider>
     </Box>
   );
