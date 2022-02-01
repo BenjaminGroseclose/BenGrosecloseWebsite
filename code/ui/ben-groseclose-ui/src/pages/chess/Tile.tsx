@@ -6,14 +6,16 @@ export interface TileProps {
   piece?: Piece,
   backgroundColor: string,
   column: string,
-  row: number
+  row: number,
+  onClick: (piece?: Piece) => void
 }
 
-const Tile = ({piece, backgroundColor, column, row}: TileProps) => {
+const Tile = ({piece, backgroundColor, column, row, onClick}: TileProps) => {
   return (
     <Box
       id={`${column}${row}`}
       sx={{ backgroundColor: backgroundColor }}
+      onClick={() => onClick(piece)}
     >
       {
         piece ? <img id={`${column}${row}-image`} src={piece.image} alt={`${column}${row} tile`} width={50} height={50} /> 
