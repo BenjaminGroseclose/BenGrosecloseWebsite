@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import WifiProtectedSetupIcon from '@mui/icons-material/WifiProtectedSetup';
 import React, { useEffect, useState } from 'react';
 import { columns, initBoardState, Piece, PieceType, Position, rows, TeamType } from './Constants';
@@ -8,6 +8,7 @@ const darkTileColor = '#BD9A7A';
 const lightTileColor = '#654321';
 
 const ChessPage = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [tiles, setTiles] = useState<any[]>([]);
   const [movingPiece, setMovingPiece] = useState<Piece>();
   const [activePieces, setActivePieces] = useState<Piece[]>(initBoardState);
@@ -40,17 +41,49 @@ const ChessPage = () => {
       }
     }
 
+    console.log('setting tiles useEffect')
+    console.log(tempTileList);
     setTiles(tempTileList);
+    console.log(tiles);
+    setIsLoading(false);
 
   }, []);
 
-  const onTileClick = (piece?: Piece) => {
+  const onTileClick = (backgroundColor: string, piece?: Piece) => {
+    if (piece === undefined) {
+      return;
+    }
+
     if (movingPiece !== undefined) {
-      let acceptableMoves = viableMoves(movingPiece)
+      // let acceptableMoves = viableMoves(movingPiece)
+      console.log('moving...')
+      
+      let tempTiles = tiles;
+
+      tempTiles[findTileIndex(piece.position.column, piece.position.row)] = <Tile
+        key={`${piece.position.column},${piece.position.row}`} 
+        backgroundColor={backgroundColor} 
+        piece={movingPiece} 
+        column={piece.position.column} 
+        row={piece.position.row}
+        onClick={onTileClick}
+      />;
+
+      tempTiles[findTileIndex(movingPiece.position.column, movingPiece.position.row)] = <Tile
+        key={`${movingPiece.position.column},${movingPiece.position.row}`} 
+        backgroundColor={backgroundColor} 
+        piece={undefined} 
+        column={movingPiece.position.column} 
+        row={movingPiece.position.row}
+        onClick={onTileClick}
+      />;
+
+      setTiles(tempTiles);
 
       return;
     }
 
+    console.log('setting moving piece')
     setMovingPiece(piece);
 
     if (piece === undefined)
@@ -70,6 +103,7 @@ const ChessPage = () => {
         positions = possiblePawnMovement(piece);
         break;
       case PieceType.ROOK:
+        positions = possibleRookMovement(piece);
         break;
       case PieceType.KNIGHT:
         break;
@@ -88,28 +122,153 @@ const ChessPage = () => {
     return (position1.column === position2.column && position1.row === position2.row);
   }
 
-  const findTile = (column: string, row: number): any => {
-    return tiles.filter(x => x.props.column === column && x.props.row === row)[0].props;
+  const findTile = (column: string, row: number): TileProps => {
+    console.log(`${column}, ${row}`)
+    console.log(tiles);
+    return tiles.filter(x => x.props.column === column && x.props.row === row)[0].props as TileProps
+  }
+
+  const findTileIndex = (column: string, row: number): number => {
+    return tiles.findIndex(x => x.props.column === column && x.props.row === row);
   }
 
   const possiblePawnMovement = (piece: Piece): Position[] => {
     let positions: Position[] = [];
 
-    if (piece.hasMoved === false) {
+    const normalMoveRow = piece.team === TeamType.WHITE ? piece.position.row + 1 : piece.position.row - 1;
+    const doubleMoveRow = piece.team === TeamType.WHITE ? piece.position.row + 2 : piece.position.row - 2;
+
+    if (findTile(piece.position.column, normalMoveRow).piece === undefined) {
       positions.push({
         column: piece.position.column,
-        row: piece.team === TeamType.WHITE ? piece.position.row + 2 : piece.position.row - 2
+        row: normalMoveRow
+      });
+
+      if (piece.hasMoved === false && findTile(piece.position.column, doubleMoveRow).piece === undefined) {
+        positions.push({
+          column: piece.position.column,
+          row: doubleMoveRow
+        });
+      }
+    }
+
+    // Check if enemy is on attacking squares
+    const originalColumn = columns.indexOf(piece.position.column)
+    let tile1 = findTile(columns[originalColumn - 1], normalMoveRow);
+
+    if (originalColumn !== 0 && tile1.piece !== undefined && tile1.piece.team !== piece.team) {
+      positions.push({
+        column: columns[originalColumn - 1],
+        row: normalMoveRow
       });
     }
 
-    positions.push({
-      column: piece.position.column,
-      row: piece.team === TeamType.WHITE ? piece.position.row + 1 : piece.position.row - 1
-    });
+    let tile2 = findTile(columns[originalColumn + 1], normalMoveRow);
 
-    // Check if enemy is on attacking squares
-    if ( findTile(piece.position.column, piece.position.row)) {
+    if (originalColumn !== 8 && tile2.piece !== undefined && tile2.piece.team !== piece.team) {
+      positions.push({
+        column: columns[originalColumn + 1],
+        row: normalMoveRow
+      });
+    }
 
+    return positions;
+  }
+
+  const possibleRookMovement = (piece: Piece): Position[] => {
+    let positions: Position[] = [];
+
+    const originalRow = piece.position.row;
+    const originalColumn = piece.position.column;
+
+    // Move whole column unless blocked
+    for (let i = columns.indexOf(originalColumn) - 1; i >= 0; i--) {
+      let tile = findTile(columns[i], originalRow);
+      if (tile.piece === undefined) {
+        positions.push({
+          column: columns[i],
+          row: originalRow
+        });
+        continue;
+      }
+
+      if (tile.piece.team !== piece.team) {
+        // Attack move
+        positions.push({
+          column: columns[i],
+          row: originalRow
+        });
+        break;
+      }
+
+      break;
+    }
+
+    for (let i = columns.indexOf(originalColumn); i <= 8; i++) {
+      let tile = findTile(columns[i], originalRow);
+      if (tile.piece === undefined) {
+        positions.push({
+          column: columns[i],
+          row: originalRow
+        });
+        continue;
+      }
+
+      if (tile.piece.team !== piece.team) {
+        // Attack move
+        positions.push({
+          column: columns[i],
+          row: originalRow
+        });
+        break;
+      }
+
+      break;
+    }
+
+    // Move whole row unless blocked
+    for (let i = rows.indexOf(originalRow) - 1; i >= 0; i--) {
+      let tile = findTile(originalColumn, rows[i]);
+      if (tile.piece === undefined) {
+        positions.push({
+          column: originalColumn,
+          row: rows[i]
+        });
+        continue;
+      }
+
+      if (tile.piece.team !== piece.team) {
+        // Attack move
+        positions.push({
+          column: originalColumn,
+          row: rows[i]
+        });
+        break;
+      }
+
+      break;
+    }
+
+    for (let i = rows.indexOf(originalRow); i <= 8; i++) {
+      let tile = findTile(originalColumn, rows[i]);
+      if (tile.piece === undefined) {
+        positions.push({
+          column: originalColumn,
+          row: rows[i]
+        });
+        continue;
+      }
+
+      if (tile.piece.team !== piece.team) {
+        // Attack move
+        positions.push({
+          column: originalColumn,
+          row: rows[i]
+        });
+        break;
+      }
+
+      break;
     }
 
     return positions;
@@ -122,6 +281,7 @@ const ChessPage = () => {
       tempTiles.push(tiles[i]);
     }
 
+    console.log('setting tiles flip')
     setTiles(tempTiles);
   }
 
@@ -131,28 +291,32 @@ const ChessPage = () => {
         Chess
       </Typography>
 
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          marginBottom: 4
-        }}
-      >
+      {
+        isLoading ? <CircularProgress /> :
+      
         <Box
           sx={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(8, 50px)',
-            gridTemplateRows: 'repeat(8, 50px)'
+            display: 'flex',
+            flexDirection: 'row',
+            marginBottom: 4
           }}
         >
-          {tiles}
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(8, 50px)',
+              gridTemplateRows: 'repeat(8, 50px)'
+            }}
+          >
+            {tiles}
+          </Box>
+          <Box sx={{ marginLeft: 1 }}>
+            <IconButton onClick={flipBoard} color='secondary'>
+              Flip Board<WifiProtectedSetupIcon />
+            </IconButton>
+          </Box>
         </Box>
-        <Box sx={{ marginLeft: 1 }}>
-          <IconButton onClick={flipBoard} color='secondary'>
-            Flip Board<WifiProtectedSetupIcon />
-          </IconButton>
-        </Box>
-      </Box>
+      }
     </Box>
   );
 
