@@ -9,12 +9,13 @@ const lightTileColor = '#654321';
 
 const ChessPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [tiles, setTiles] = useState<any[]>([]);
+  const [tiles, setTiles] = useState<JSX.Element[]>([]);
   const [movingPiece, setMovingPiece] = useState<Piece>();
   const [activePieces, setActivePieces] = useState<Piece[]>(initBoardState);
   
   useEffect(() => {
     let tempTileList = [];
+    console.log(isLoading);
 
     for (let i = 0; i < rows.length; i++) {
       for (let j = 0; j < columns.length; j++) {
@@ -44,7 +45,6 @@ const ChessPage = () => {
     console.log('setting tiles useEffect')
     console.log(tempTileList);
     setTiles(tempTileList);
-    console.log(tiles);
     setIsLoading(false);
 
   }, []);
@@ -123,9 +123,14 @@ const ChessPage = () => {
   }
 
   const findTile = (column: string, row: number): TileProps => {
-    console.log(`${column}, ${row}`)
-    console.log(tiles);
-    return tiles.filter(x => x.props.column === column && x.props.row === row)[0].props as TileProps
+    if (tiles !== undefined && tiles.length >= 1) {
+      console.log(`${column}, ${row}`)
+      console.log(tiles);
+      return tiles.filter(x => x.props.column === column && x.props.row === row)[0].props as TileProps
+    } else {
+      console.log('it was undefined...')
+      return tiles[0].props;
+    }
   }
 
   const findTileIndex = (column: string, row: number): number => {
@@ -137,6 +142,8 @@ const ChessPage = () => {
 
     const normalMoveRow = piece.team === TeamType.WHITE ? piece.position.row + 1 : piece.position.row - 1;
     const doubleMoveRow = piece.team === TeamType.WHITE ? piece.position.row + 2 : piece.position.row - 2;
+
+    console.log(`${piece.position.column}, ${normalMoveRow}`)
 
     if (findTile(piece.position.column, normalMoveRow).piece === undefined) {
       positions.push({
@@ -154,22 +161,26 @@ const ChessPage = () => {
 
     // Check if enemy is on attacking squares
     const originalColumn = columns.indexOf(piece.position.column)
-    let tile1 = findTile(columns[originalColumn - 1], normalMoveRow);
+    if (columns[originalColumn - 1]) {
+      let tile1 = findTile(columns[originalColumn - 1], normalMoveRow);
 
-    if (originalColumn !== 0 && tile1.piece !== undefined && tile1.piece.team !== piece.team) {
-      positions.push({
-        column: columns[originalColumn - 1],
-        row: normalMoveRow
-      });
+      if (originalColumn !== 0 && tile1.piece !== undefined && tile1.piece.team !== piece.team) {
+        positions.push({
+          column: columns[originalColumn - 1],
+          row: normalMoveRow
+        });
+      }
     }
 
-    let tile2 = findTile(columns[originalColumn + 1], normalMoveRow);
+    if (columns[originalColumn + 1]) {
+      let tile2 = findTile(columns[originalColumn + 1], normalMoveRow);
 
-    if (originalColumn !== 8 && tile2.piece !== undefined && tile2.piece.team !== piece.team) {
-      positions.push({
-        column: columns[originalColumn + 1],
-        row: normalMoveRow
-      });
+      if (originalColumn !== 8 && tile2.piece !== undefined && tile2.piece.team !== piece.team) {
+        positions.push({
+          column: columns[originalColumn + 1],
+          row: normalMoveRow
+        });
+      }
     }
 
     return positions;
@@ -292,7 +303,7 @@ const ChessPage = () => {
       </Typography>
 
       {
-        isLoading ? <CircularProgress /> :
+        isLoading === true ? <CircularProgress /> :
       
         <Box
           sx={{
