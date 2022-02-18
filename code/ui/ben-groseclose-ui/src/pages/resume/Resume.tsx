@@ -1,5 +1,6 @@
 import { Typography, Box, Chip, Divider } from '@mui/material';
 import React from 'react';
+import ContactMe from '../../shared/components/contact-me/ContactMe';
 import EducationComponent from './EducationComponent';
 import ExperienceComponent from './ExperienceComponent';
 import { Experience, Education } from './models';
@@ -13,12 +14,13 @@ const Resume = () => {
       end: 'Present',
       title: 'Software Developer',
       descriptions: [
-        'Using Angular 7 to create and support a patient portal website',
+        'Created and supported a new patient portal website with Angular 7.',
         'Developing efficient microservices using C# to provide value to several different applications.',
         'Supporting mobile development on both Android and iOS platforms with Java, Kotlin, and Swift.',
         'Working in an agile development environment following SAFe methodologies.',
         'Worked with Twilio to create a fully customizable appointment reminder system.',
         'Used AWS CDK to configure new cloud-native applications.',
+        'Wrote AWS Lambdas in Python and C# to efficiently execution API requests.',
         'Created an admin portal to maintain internal application with React.'
       ]
     },
@@ -28,8 +30,8 @@ const Resume = () => {
       end: 'Feb 2019',
       title: 'Software Developer Intern',
       descriptions: [
-        'Provided new features to Amrock’s mobile application using Java and Kotlin.',
-        'Sought ways to improve the agile team’s process and the in-house mobile and windows Applications.',
+        'Provided new features to Amrock\'s mobile application using Java and Kotlin.',
+        'Sought ways to improve the agile team\'s process and the in-house mobile and windows Applications.',
         'Addressed tech debt within the applications and worked towards proper architecture.',
         'Contributed to implementing a C# Microservices using ASP.NET.',
         'Developed on an enterprise ESCROW Windows Application using C#.',
@@ -62,8 +64,8 @@ const Resume = () => {
       </Typography>
       <Box>
         <Chip label="C#" variant='filled' sx={{ margin: 1 }} />
-        <Chip label=".NET" variant='filled' sx={{ margin: 1 }} />
-        <Chip label="ASP .NET" variant='filled' sx={{ margin: 1 }} />
+        <Chip label=".NET Core" variant='filled' sx={{ margin: 1 }} />
+        <Chip label="ASP .NET Core" variant='filled' sx={{ margin: 1 }} />
         <Chip label="Angular" variant='filled' sx={{ margin: 1 }} />
         <Chip label="React" variant='filled' sx={{ margin: 1 }} />
         <Chip label="Android Development" variant='filled' sx={{ margin: 1 }} />
@@ -71,6 +73,7 @@ const Resume = () => {
         <Chip label="Kotlin" variant='filled' sx={{ margin: 1 }} />
         <Chip label="Python" variant='filled' sx={{ margin: 1 }} />
         <Chip label="Agile" variant='filled' sx={{ margin: 1 }} />
+        <Chip label="Javascript / Typescript" variant='filled' sx={{ margin: 1 }} />
         <Chip label="SAFe" variant='filled' sx={{ margin: 1 }} />
         <Chip label="AWS" variant='filled' sx={{ margin: 1 }} />
         <Chip label="AWS CDK" variant='filled' sx={{ margin: 1 }} />
@@ -113,6 +116,8 @@ const Resume = () => {
         ))
       }
       </Box>
+      <Divider sx={{ marginTop: 3, marginBottom: 3 }} />
+      <ContactMe />
     </Box>
   )
 }

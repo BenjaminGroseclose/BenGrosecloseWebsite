@@ -1,5 +1,6 @@
-import { Typography, Box, Link } from '@mui/material';
+import { Typography, Box, Link, Divider } from '@mui/material';
 import React from 'react';
+import ContactMe from '../../shared/components/contact-me/ContactMe';
 
 const Projects = () => {
   return (
@@ -17,6 +18,8 @@ const Projects = () => {
         <br/><br/>
         <Link  color='inherit' href='https://github.com/BenjaminGroseclose/BenGrosecloseWebsite' target='_blank' >Github Repository</Link>
       </Typography>
+      <Divider sx={{ marginTop: 3, marginBottom: 3 }} />
+      <ContactMe />
     </Box>
   )
 }

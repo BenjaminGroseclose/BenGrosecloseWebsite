@@ -1,6 +1,7 @@
 import { Divider, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
+import ContactMe from '../../shared/components/contact-me/ContactMe'
 
 const Home = () => {
   return (
@@ -8,7 +9,7 @@ const Home = () => {
       <Typography variant='h5'>
         About Me
       </Typography>
-      <Box 
+      <Box
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
@@ -74,6 +75,8 @@ const Home = () => {
           </Typography>
         </Box>
       </Box>
+      <Divider sx={{ marginTop: 3, marginBottom: 3 }} />
+      <ContactMe />
     </Box>
   )
 }
