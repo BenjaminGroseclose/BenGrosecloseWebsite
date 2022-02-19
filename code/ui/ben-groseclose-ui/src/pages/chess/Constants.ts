@@ -17,10 +17,21 @@ const WHITE_KING = "images/chess-pieces/white_king.png"
 const BLACK_KING = "images/chess-pieces/black_king.png"
 
 export const rows = [1, 2, 3, 4, 5, 6, 7, 8];
-export const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+export const columns = [1, 2, 3, 4, 5, 6, 7, 8];
+
+export const columnMap: { [id: number]: string } = {
+  1: 'H',
+  2: 'G',
+  3: 'F',
+  4: 'E',
+  5: 'D',
+  6: 'C',
+  7: 'B',
+  8: 'A'
+}
 
 export interface Position {
-  column: string,
+  column: number,
   row: number
 }
 
@@ -30,63 +41,75 @@ export enum PieceType {
   KNIGHT,
   ROOK,
   QUEEN,
-  KING
+  KING,
+  MOVING
 }
 
 export enum TeamType {
   WHITE,
-  BLACK
+  BLACK,
+  NEUTRAL
+}
+
+export enum GameState {
+  NOT_STARTED,
+  BLACK_CHECKED,
+  BLACK_CHECK_MATE,
+  WHITE_CHECKED,
+  WHITE_CHECK_MATE,
+  DRAW,
+  NORMAL
 }
 
 export interface Piece {
   id: number;
   image: string;
   position: Position;
-  type: PieceType;
+  pieceType: PieceType;
   team: TeamType;
   enPassant?: boolean;
 }
 
 export const initBoardState: Piece[] = [
-  { id: 1, image: WHITE_PAWN, position: { column: 'A', row: 2 }, team: TeamType.WHITE, type: PieceType.PAWN },
-  { id: 2, image: WHITE_PAWN, position: { column: 'B', row: 2 }, team: TeamType.WHITE, type: PieceType.PAWN },
-  { id: 3, image: WHITE_PAWN, position: { column: 'C', row: 2 }, team: TeamType.WHITE, type: PieceType.PAWN },
-  { id: 4, image: WHITE_PAWN, position: { column: 'D', row: 2 }, team: TeamType.WHITE, type: PieceType.PAWN },
-  { id: 5, image: WHITE_PAWN, position: { column: 'E', row: 2 }, team: TeamType.WHITE, type: PieceType.PAWN },
-  { id: 6, image: WHITE_PAWN, position: { column: 'F', row: 2 }, team: TeamType.WHITE, type: PieceType.PAWN },
-  { id: 7, image: WHITE_PAWN, position: { column: 'G', row: 2 }, team: TeamType.WHITE, type: PieceType.PAWN },
-  { id: 8, image: WHITE_PAWN, position: { column: 'H', row: 2 }, team: TeamType.WHITE, type: PieceType.PAWN },
+  { id: 1, image: WHITE_PAWN, position: { column: 1, row: 2 }, team: TeamType.WHITE, pieceType: PieceType.PAWN },
+  { id: 2, image: WHITE_PAWN, position: { column: 2, row: 2 }, team: TeamType.WHITE, pieceType: PieceType.PAWN },
+  { id: 3, image: WHITE_PAWN, position: { column: 3, row: 2 }, team: TeamType.WHITE, pieceType: PieceType.PAWN },
+  { id: 4, image: WHITE_PAWN, position: { column: 4, row: 2 }, team: TeamType.WHITE, pieceType: PieceType.PAWN },
+  { id: 5, image: WHITE_PAWN, position: { column: 5, row: 2 }, team: TeamType.WHITE, pieceType: PieceType.PAWN },
+  { id: 6, image: WHITE_PAWN, position: { column: 6, row: 2 }, team: TeamType.WHITE, pieceType: PieceType.PAWN },
+  { id: 7, image: WHITE_PAWN, position: { column: 7, row: 2 }, team: TeamType.WHITE, pieceType: PieceType.PAWN },
+  { id: 8, image: WHITE_PAWN, position: { column: 8, row: 2 }, team: TeamType.WHITE, pieceType: PieceType.PAWN },
 
-  { id: 9, image: BLACK_PAWN, position: { column: 'A', row: 7 }, team: TeamType.BLACK, type: PieceType.PAWN },
-  { id: 10, image: BLACK_PAWN, position: { column: 'B', row: 7 }, team: TeamType.BLACK, type: PieceType.PAWN },
-  { id: 11, image: BLACK_PAWN, position: { column: 'C', row: 7 }, team: TeamType.BLACK, type: PieceType.PAWN },
-  { id: 12, image: BLACK_PAWN, position: { column: 'D', row: 7 }, team: TeamType.BLACK, type: PieceType.PAWN },
-  { id: 13, image: BLACK_PAWN, position: { column: 'E', row: 7 }, team: TeamType.BLACK, type: PieceType.PAWN },
-  { id: 14, image: BLACK_PAWN, position: { column: 'F', row: 7 }, team: TeamType.BLACK, type: PieceType.PAWN },
-  { id: 15, image: BLACK_PAWN, position: { column: 'G', row: 7 }, team: TeamType.BLACK, type: PieceType.PAWN },
-  { id: 16, image: BLACK_PAWN, position: { column: 'H', row: 7 }, team: TeamType.BLACK, type: PieceType.PAWN },
+  { id: 9, image: BLACK_PAWN, position: { column: 1, row: 7 }, team: TeamType.BLACK, pieceType: PieceType.PAWN },
+  { id: 10, image: BLACK_PAWN, position: { column: 2, row: 7 }, team: TeamType.BLACK, pieceType: PieceType.PAWN },
+  { id: 11, image: BLACK_PAWN, position: { column: 3, row: 7 }, team: TeamType.BLACK, pieceType: PieceType.PAWN },
+  { id: 12, image: BLACK_PAWN, position: { column: 4, row: 7 }, team: TeamType.BLACK, pieceType: PieceType.PAWN },
+  { id: 13, image: BLACK_PAWN, position: { column: 5, row: 7 }, team: TeamType.BLACK, pieceType: PieceType.PAWN },
+  { id: 14, image: BLACK_PAWN, position: { column: 6, row: 7 }, team: TeamType.BLACK, pieceType: PieceType.PAWN },
+  { id: 15, image: BLACK_PAWN, position: { column: 7, row: 7 }, team: TeamType.BLACK, pieceType: PieceType.PAWN },
+  { id: 16, image: BLACK_PAWN, position: { column: 8, row: 7 }, team: TeamType.BLACK, pieceType: PieceType.PAWN },
 
-  { id: 17, image: WHITE_ROOK, position: { column: 'A', row: 1 }, team: TeamType.WHITE, type: PieceType.ROOK },
-  { id: 18, image: WHITE_ROOK, position: { column: 'H', row: 1 }, team: TeamType.WHITE, type: PieceType.ROOK },
+  { id: 17, image: WHITE_ROOK, position: { column: 1, row: 1 }, team: TeamType.WHITE, pieceType: PieceType.ROOK },
+  { id: 18, image: WHITE_ROOK, position: { column: 8, row: 1 }, team: TeamType.WHITE, pieceType: PieceType.ROOK },
 
-  { id: 19, image: BLACK_ROOK, position: { column: 'A', row: 8 }, team: TeamType.BLACK, type: PieceType.ROOK },
-  { id: 20, image: BLACK_ROOK, position: { column: 'H', row: 8 }, team: TeamType.BLACK, type: PieceType.ROOK },
+  { id: 19, image: BLACK_ROOK, position: { column: 1, row: 8 }, team: TeamType.BLACK, pieceType: PieceType.ROOK },
+  { id: 20, image: BLACK_ROOK, position: { column: 8, row: 8 }, team: TeamType.BLACK, pieceType: PieceType.ROOK },
 
-  { id: 21, image: WHITE_KNIGHT, position: { column: 'B', row: 1 }, team: TeamType.WHITE, type: PieceType.KNIGHT },
-  { id: 22, image: WHITE_KNIGHT, position: { column: 'G', row: 1 }, team: TeamType.WHITE, type: PieceType.KNIGHT },
+  { id: 21, image: WHITE_KNIGHT, position: { column: 2, row: 1 }, team: TeamType.WHITE, pieceType: PieceType.KNIGHT },
+  { id: 22, image: WHITE_KNIGHT, position: { column: 7, row: 1 }, team: TeamType.WHITE, pieceType: PieceType.KNIGHT },
 
-  { id: 23, image: BLACK_KNIGHT, position: { column: 'B', row: 8 }, team: TeamType.BLACK, type: PieceType.KNIGHT },
-  { id: 24, image: BLACK_KNIGHT, position: { column: 'G', row: 8 }, team: TeamType.BLACK, type: PieceType.KNIGHT },
+  { id: 23, image: BLACK_KNIGHT, position: { column: 2, row: 8 }, team: TeamType.BLACK, pieceType: PieceType.KNIGHT },
+  { id: 24, image: BLACK_KNIGHT, position: { column: 7, row: 8 }, team: TeamType.BLACK, pieceType: PieceType.KNIGHT },
 
-  { id: 25, image: WHITE_BISHOP, position: { column: 'C', row: 1 }, team: TeamType.WHITE, type: PieceType.BISHOP },
-  { id: 26, image: WHITE_BISHOP, position: { column: 'F', row: 1 }, team: TeamType.WHITE, type: PieceType.BISHOP },
+  { id: 25, image: WHITE_BISHOP, position: { column: 3, row: 1 }, team: TeamType.WHITE, pieceType: PieceType.BISHOP },
+  { id: 26, image: WHITE_BISHOP, position: { column: 6, row: 1 }, team: TeamType.WHITE, pieceType: PieceType.BISHOP },
 
-  { id: 27, image: BLACK_BISHOP, position: { column: 'C', row: 8 }, team: TeamType.BLACK, type: PieceType.BISHOP },
-  { id: 28, image: BLACK_BISHOP, position: { column: 'F', row: 8 }, team: TeamType.BLACK, type: PieceType.BISHOP },
+  { id: 27, image: BLACK_BISHOP, position: { column: 3, row: 8 }, team: TeamType.BLACK, pieceType: PieceType.BISHOP },
+  { id: 28, image: BLACK_BISHOP, position: { column: 6, row: 8 }, team: TeamType.BLACK, pieceType: PieceType.BISHOP },
 
-  { id: 29, image: WHITE_QUEEN, position: { column: 'D', row: 1 }, team: TeamType.WHITE, type: PieceType.QUEEN },
-  { id: 30, image: WHITE_KING, position: { column: 'E', row: 1 }, team: TeamType.WHITE, type: PieceType.KING },
+  { id: 29, image: WHITE_QUEEN, position: { column: 4, row: 1 }, team: TeamType.WHITE, pieceType: PieceType.QUEEN },
+  { id: 30, image: WHITE_KING, position: { column: 5, row: 1 }, team: TeamType.WHITE, pieceType: PieceType.KING },
 
-  { id: 31, image: BLACK_QUEEN, position: { column: 'D', row: 8 }, team: TeamType.BLACK, type: PieceType.QUEEN },
-  { id: 32, image: BLACK_KING, position: { column: 'E', row: 8 }, team: TeamType.BLACK, type: PieceType.KING },
+  { id: 31, image: BLACK_QUEEN, position: { column: 4, row: 8 }, team: TeamType.BLACK, pieceType: PieceType.QUEEN },
+  { id: 32, image: BLACK_KING, position: { column: 5, row: 8 }, team: TeamType.BLACK, pieceType: PieceType.KING }
 ]

@@ -32,7 +32,7 @@ class PipelineStack(Stack):
         pipeline = pipelines.CodePipeline(self,
                                           construct_id,
                                           self_mutation=True,
-                                          pipeline_name='DeploymentPipeline',
+                                          pipeline_name='BenGrosecloseWebsite-DeploymentPipeline',
                                           synth=synthStep)
 
         pipeline.add_stage(ApplicationStage(
