@@ -12,7 +12,7 @@ class PipelineStack(cdk.Stack):
         synthStep = pipelines.ShellStep(
             'Synth',
             install_commands=[
-                'npm install -g aws-cdk', 
+                'npm install -g aws-cdk@1.144.0', 
                 'python -m pip install -r requirements.txt'
             ],
             commands=[

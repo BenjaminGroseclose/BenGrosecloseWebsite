@@ -1,4 +1,4 @@
-
+npm uninstall -g aws-cdk
 # Welcome to your CDK Python project!
 
 This is a blank project for Python development with CDK.
