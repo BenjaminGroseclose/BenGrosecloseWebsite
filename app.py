@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-import os
-
-from aws_cdk import core as cdk
+from aws_cdk import App, Environment
 
 from stacks.pipeline_stack import PipelineStack
 
-env = cdk.Environment(account='349097218527', region='us-east-1')
+env = Environment(account='349097218527', region='us-east-1')
 
-app = cdk.App()
+app = App()
 
 PipelineStack(app, 'deployment-pipeline', env=env)
 
