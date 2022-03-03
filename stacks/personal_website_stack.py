@@ -1,5 +1,6 @@
+from constructs import Construct
 from aws_cdk import (
-    core as cdk,
+    Stack, RemovalPolicy,
     aws_s3 as s3,
     aws_s3_deployment as s3_deployment,
     aws_cloudfront as cloudfront,
@@ -8,9 +9,9 @@ from aws_cdk import (
     aws_certificatemanager as acm
 )
 
-class PersonalWebsiteStack(cdk.Stack):
+class PersonalWebsiteStack(Stack):
 
-    def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         domain_name = 'bengroseclose.com'
@@ -37,7 +38,7 @@ class PersonalWebsiteStack(cdk.Stack):
             f'{construct_id}-react-bucket',
             bucket_name=domain_name,
             public_read_access=True,
-            removal_policy=cdk.RemovalPolicy.DESTROY,
+            removal_policy=RemovalPolicy.DESTROY,
             website_index_document='index.html',
             website_routing_rules=[
                 s3.RoutingRule(
