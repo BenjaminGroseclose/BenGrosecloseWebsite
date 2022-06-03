@@ -31,7 +31,7 @@ const Home = () => {
 					<br />I enjoy spending time with my family especially when we get together at Disney or our family island. My wife's family has been going to Disney
 					since I have known them, and I have come to enjoy my time there. Whether it is going to splash mountain or eating amazing food around Epcot it is
 					always a good time. My family island based in the St. Lawerence river is a small 5 acres with an old wooden cabin on it. I have gone there since I was
-					young. In my normal free time, I like to play board games or video games as well as watch basketball or football.
+					young. Some of my other passions include sports, board games, and video games.
 				</Typography>
 				<img src="./images/family.jpg" alt="Family" style={{ maxWidth: '400px', margin: 'auto' }} />
 			</Box>
