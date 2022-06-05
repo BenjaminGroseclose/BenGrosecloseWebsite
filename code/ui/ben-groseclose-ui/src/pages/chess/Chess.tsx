@@ -1,7 +1,7 @@
-import { Box, Button, CircularProgress, IconButton, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material';
 import WifiProtectedSetupIcon from '@mui/icons-material/WifiProtectedSetup';
 import React, { useCallback, useEffect, useState } from 'react';
-import { columns, GameState, initBoardState, Piece, PieceType, Position, rows, TeamType } from './Constants';
+import { columnMap, columns, GameState, initBoardState, Piece, PieceType, Position, rows, TeamType } from './Constants';
 import Tile from './Tile';
 import Referee from './Referee';
 import { onSameTile } from './rules/CommonRules';
@@ -13,20 +13,20 @@ import {
 	WHITE_ROOK_LEFT_STARTING_SQUARE,
 	WHITE_ROOK_RIGHT_STARTING_SQUARE
 } from './rules/King';
+import useWindowDimensions from './WindowDimensions';
 
 /*
 	BUGS
+	Look into how to switch pieces easly when on same team
 
 	FEATURES
 	Required (In priority)
-  - Checkmate can be detected
 	- Promotion
 	- Offer draws
 	- Surrender
 
 	Nice to have:
 	- Calc material advantage
-	- Chess annotation
 	- Display a snack bar when warnings happen
 	- Detect draws
 */
@@ -39,6 +39,14 @@ interface ChessGameState {
 	team: TeamType;
 	state: GameState;
 	checkingPieces: Piece[];
+}
+
+function getWindowDimensions() {
+	const { innerWidth: width, innerHeight: height } = window;
+	return {
+		width,
+		height
+	};
 }
 
 const ChessPage = () => {
@@ -56,10 +64,51 @@ const ChessPage = () => {
 	let [moveablePositions, setMoveablePositions] = useState<Position[]>([]);
 	let [blackGraveyard, setBlackGraveyard] = useState<Piece[]>([]);
 	let [whiteGraveyard, setWhiteGraveyard] = useState<Piece[]>([]);
+	let [openDialog, setOpenDialog] = useState<boolean>(false);
+	let [chessNotation, setChessNotation] = useState<string[]>([]);
+
+	const { height, width } = useWindowDimensions();
 	const referee = new Referee();
 
 	const onTileClick = useCallback(
 		(position: Position, piece?: Piece) => {
+			const updateChessNotation = (selectedPosition: Position, selectedPiece: Piece, isCapture: boolean, originalPosition: Position): void => {
+				let notationToAdd = '';
+
+				if (selectedPiece.pieceType === PieceType.PAWN) {
+					if (isCapture) {
+						notationToAdd = `${columnMap[originalPosition.column]}x${columnMap[selectedPosition.column]}${selectedPosition.row}`;
+					} else {
+						notationToAdd = `${columnMap[selectedPosition.column]}${selectedPosition.row}`;
+					}
+				} else {
+					switch (selectedPiece.pieceType) {
+						case PieceType.KNIGHT:
+							notationToAdd = 'N';
+							break;
+						case PieceType.BISHOP:
+							notationToAdd = 'G';
+							break;
+						case PieceType.ROOK:
+							notationToAdd = 'R';
+							break;
+						case PieceType.QUEEN:
+							notationToAdd = 'Q';
+							break;
+						case PieceType.KING:
+							notationToAdd = 'K';
+							break;
+					}
+
+					if (isCapture) {
+						notationToAdd = notationToAdd + 'x';
+					}
+					notationToAdd = notationToAdd + `${columnMap[selectedPosition.column]}${selectedPosition.row}`;
+				}
+
+				setChessNotation([...chessNotation, notationToAdd]);
+			};
+
 			const isSelectedPositionCastleMove = (selectedPosition: Position): boolean => {
 				return (
 					onSameTile(selectedPosition, { column: 3, row: 1 }) ||
@@ -91,6 +140,11 @@ const ChessPage = () => {
 
 				return filtedPositions && filtedPositions.length > 0;
 			};
+
+			if (gameState.state === GameState.BLACK_CHECK_MATE || gameState.state === GameState.WHITE_CHECK_MATE) {
+				setOpenDialog(true);
+				return;
+			}
 
 			if (gameState.state === GameState.NOT_STARTED) {
 				return;
@@ -144,11 +198,15 @@ const ChessPage = () => {
 
 				// Moving a piece and ending turn
 				let tempPiece = selectedPiece;
+				let originalPosition = tempPiece.position;
+				let isCapture = false;
+
 				tempPiece.position = position;
 
 				let enemyPieceIndex = tempPieces.findIndex((p) => p.position.column === position.column && p.position.row === position.row);
 
-				if (enemyPieceIndex) {
+				if (enemyPieceIndex !== -1) {
+					isCapture = true;
 					if (selectedPiece.team === TeamType.WHITE) {
 						setBlackGraveyard([...blackGraveyard, tempPieces[enemyPieceIndex]]);
 					} else {
@@ -169,6 +227,16 @@ const ChessPage = () => {
 					state: refereeGameState.gameState,
 					checkingPieces: refereeGameState.checkingPieces
 				});
+
+				updateChessNotation(position, tempPiece, isCapture, originalPosition);
+
+				if (
+					refereeGameState.gameState === GameState.BLACK_CHECK_MATE ||
+					refereeGameState.gameState === GameState.WHITE_CHECK_MATE ||
+					refereeGameState.gameState === GameState.DRAW
+				) {
+					setOpenDialog(true);
+				}
 			}
 			// TODO: look into how to switch pieces easly when on same team
 			//  else if (piece && piece?.team === selectedPiece?.team) {
@@ -252,7 +320,13 @@ const ChessPage = () => {
 	};
 
 	const restart = () => {
-		console.error('TODO: RESTART');
+		setActivePieces(initBoardState);
+		setGameState({
+			team: TeamType.WHITE,
+			turn: 0,
+			state: GameState.NOT_STARTED,
+			checkingPieces: []
+		});
 	};
 
 	const start = () => {
@@ -262,11 +336,81 @@ const ChessPage = () => {
 		});
 	};
 
+	const DisplayGameInformation = () => {
+		return (
+			<Box id="game-information">
+				<Typography>Team Turn: {gameState.team === TeamType.WHITE ? 'White' : 'Black'}</Typography>
+				<Typography>Turn: {gameState.turn}</Typography>
+
+				<Box sx={{ display: 'flex', flexDirection: 'column' }}>
+					<Box sx={{ display: 'flex', flexDirection: 'row', marginTop: '8px' }}>
+						{chessNotation?.map((notation: string, index: number) => {
+							return (
+								<Typography key={index} sx={{ marginRight: '4px' }}>
+									{notation}
+								</Typography>
+							);
+						})}
+					</Box>
+					<Box sx={{ display: 'flex', flexDirection: 'row' }}>
+						{blackGraveyard.map((piece: Piece, index: number) => {
+							if (piece) {
+								return <img key={index} id={`${index}`} src={piece.image} alt={`Black Pieces ${piece.image} graveyard`} width={50} height={50} />;
+							} else {
+								return <span key={index}></span>;
+							}
+						})}
+					</Box>
+					<Box sx={{ display: 'flex', flexDirection: 'row' }}>
+						{whiteGraveyard.map((piece: Piece, index: number) => {
+							if (piece) {
+								return <img key={index} id={`${index}`} src={piece.image} alt={`White Pieces ${piece.image} graveyard`} width={50} height={50} />;
+							} else {
+								return <span key={index}></span>;
+							}
+						})}
+					</Box>
+				</Box>
+			</Box>
+		);
+	};
+
+	const EndDialog = () => {
+		const handleClose = () => {
+			setOpenDialog(false);
+		};
+
+		return (
+			<Dialog onClose={handleClose} open={openDialog}>
+				{gameState.state === GameState.DRAW ? (
+					<DialogTitle>Draw!</DialogTitle>
+				) : (
+					<DialogTitle>{gameState.state === GameState.BLACK_CHECK_MATE ? 'White Wins!' : 'Black Wins!'}</DialogTitle>
+				)}
+				<DialogContent></DialogContent>
+				<DialogActions>
+					<Button color="primary" onClick={handleClose}>
+						Close
+					</Button>
+				</DialogActions>
+			</Dialog>
+		);
+	};
+
 	return (
 		<Box id="chesspage">
-			<Typography variant="h4" sx={{ marginBottom: 3 }}>
-				Chess
-			</Typography>
+			<Box sx={{ display: 'flex', flexDirection: 'row' }}>
+				<Typography variant="h4" sx={{ marginBottom: 3 }}>
+					Chess
+				</Typography>
+				{gameState.state === GameState.NOT_STARTED ? (
+					<Button sx={{ marginLeft: '8px', height: '40px' }} color="primary" variant="outlined" onClick={start}>
+						Start
+					</Button>
+				) : (
+					<span></span>
+				)}
+			</Box>
 
 			{isLoading === true ? (
 				<CircularProgress />
@@ -274,7 +418,7 @@ const ChessPage = () => {
 				<Box
 					sx={{
 						display: 'flex',
-						flexDirection: 'row',
+						flexDirection: width > 750 ? 'row' : 'column',
 						marginBottom: 4
 					}}
 				>
@@ -289,46 +433,26 @@ const ChessPage = () => {
 					</Box>
 					<Box sx={{ marginLeft: 1 }}>
 						{gameState.state === GameState.NOT_STARTED ? (
-							<Button color="primary" variant="outlined" onClick={start}>
-								Start
-							</Button>
+							<span></span>
 						) : (
-							<Box sx={{ display: 'flex', flexDirection: 'column' }}>
-								<Typography>Team: {gameState.team === TeamType.WHITE ? 'White' : 'Black'}</Typography>
-								<Typography>Turn: {gameState.turn}</Typography>
-								<Typography>State: {gameState.state}</Typography>
-								<IconButton onClick={flipBoard} color="primary">
-									Flip Board
-									<WifiProtectedSetupIcon />
-								</IconButton>
-								<Button color="secondary" variant="outlined" onClick={restart}>
-									Restart
-								</Button>
-								<Box sx={{ display: 'flex', flexDirection: 'column' }}>
-									<Box sx={{ display: 'flex', flexDirection: 'row' }}>
-										{blackGraveyard.map((piece: Piece, index: number) => {
-											if (piece) {
-												return <img key={index} id={`${index}`} src={piece.image} alt={`Black Pieces ${piece.image} graveyard`} width={50} height={50} />;
-											} else {
-												return <span key={index}></span>;
-											}
-										})}
-									</Box>
-									<Box sx={{ display: 'flex', flexDirection: 'row' }}>
-										{whiteGraveyard.map((piece: Piece, index: number) => {
-											if (piece) {
-												return <img key={index} id={`${index}`} src={piece.image} alt={`White Pieces ${piece.image} graveyard`} width={50} height={50} />;
-											} else {
-												return <span key={index}></span>;
-											}
-										})}
-									</Box>
+							<Box>
+								<Box sx={{ display: 'flex', flexDirection: width > 750 ? 'column' : 'row', marginTop: '8px' }}>
+									<IconButton onClick={flipBoard} color="primary">
+										Flip Board
+										<WifiProtectedSetupIcon />
+									</IconButton>
+									<Button color="secondary" variant="outlined" onClick={restart}>
+										Restart
+									</Button>
 								</Box>
+
+								<DisplayGameInformation />
 							</Box>
 						)}
 					</Box>
 				</Box>
 			)}
+			<EndDialog />
 		</Box>
 	);
 };

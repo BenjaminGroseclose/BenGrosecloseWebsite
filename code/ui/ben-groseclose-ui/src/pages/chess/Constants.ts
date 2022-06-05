@@ -20,14 +20,14 @@ export const rows = [1, 2, 3, 4, 5, 6, 7, 8];
 export const columns = [1, 2, 3, 4, 5, 6, 7, 8];
 
 export const columnMap: { [id: number]: string } = {
-  1: 'H',
-  2: 'G',
-  3: 'F',
-  4: 'E',
-  5: 'D',
-  6: 'C',
-  7: 'B',
-  8: 'A'
+  1: 'h',
+  2: 'g',
+  3: 'f',
+  4: 'e',
+  5: 'd',
+  6: 'c',
+  7: 'b',
+  8: 'a'
 }
 
 export interface Position {

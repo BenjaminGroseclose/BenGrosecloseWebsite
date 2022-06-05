@@ -129,6 +129,14 @@ export default class Referee {
 		let gameState = GameState.NORMAL;
 		let checkingPieces: Piece[] = [];
 
+		// No pieces but kings left = draw
+		if (activePieces.filter((x) => x.pieceType !== PieceType.KING).length === 0) {
+			return {
+				gameState: GameState.DRAW,
+				checkingPieces: []
+			};
+		}
+
 		switch (lastTurnTeam) {
 			case TeamType.WHITE:
 				checkingPieces = this.evaluateBoard(activePieces, TeamType.WHITE);
@@ -167,7 +175,6 @@ export default class Referee {
 
 			// King can't move checking for block / captures
 			if (kingMoves && kingMoves.length === 0) {
-				console.log('King has no moves');
 				const checkedKingPieces = [...activePieces.filter((x) => x.team === checkedKing.team)];
 				let canBlock = false;
 
@@ -177,15 +184,11 @@ export default class Referee {
 					movingPiecePositions = this.filterToRemoveCheckedStatus(movingPiecePositions, activePieces, checkingPieces);
 
 					if (movingPiecePositions.length > 0) {
-						console.log(movingPiecePositions);
-						console.log(piece);
 						canBlock = true;
 					}
 				});
 
-				console.log(canBlock);
 				if (canBlock === false) {
-					console.log('no one can block for the king');
 					// Checkmate
 					if (checkingTeam === TeamType.WHITE) {
 						gameState = GameState.BLACK_CHECK_MATE;
