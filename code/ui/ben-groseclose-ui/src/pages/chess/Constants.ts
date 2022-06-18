@@ -1,20 +1,20 @@
-const WHITE_PAWN = "images/chess-pieces/white_pawn.png";
-const BLACK_PAWN = "images/chess-pieces/black_pawn.png";
+const WHITE_PAWN = "/images/chess-pieces/white_pawn.png";
+const BLACK_PAWN = "/images/chess-pieces/black_pawn.png";
 
-const WHITE_ROOK = "images/chess-pieces/white_rook.png";
-const BLACK_ROOK = "images/chess-pieces/black_rook.png";
+const WHITE_ROOK = "/images/chess-pieces/white_rook.png";
+const BLACK_ROOK = "/images/chess-pieces/black_rook.png";
 
-const WHITE_BISHOP = "images/chess-pieces/white_bishop.png";
-const BLACK_BISHOP = "images/chess-pieces/black_bishop.png";
+const WHITE_BISHOP = "/images/chess-pieces/white_bishop.png";
+const BLACK_BISHOP = "/images/chess-pieces/black_bishop.png";
 
-const WHITE_KNIGHT = "images/chess-pieces/white_knight.png";
-const BLACK_KNIGHT = "images/chess-pieces/black_knight.png";
+const WHITE_KNIGHT = "/images/chess-pieces/white_knight.png";
+const BLACK_KNIGHT = "/images/chess-pieces/black_knight.png";
 
-const WHITE_QUEEN = "images/chess-pieces/white_queen.png";
-const BLACK_QUEEN = "images/chess-pieces/black_queen.png";
+const WHITE_QUEEN = "/images/chess-pieces/white_queen.png";
+const BLACK_QUEEN = "/images/chess-pieces/black_queen.png";
 
-const WHITE_KING = "images/chess-pieces/white_king.png"
-const BLACK_KING = "images/chess-pieces/black_king.png"
+const WHITE_KING = "/images/chess-pieces/white_king.png"
+const BLACK_KING = "/images/chess-pieces/black_king.png"
 
 export const rows = [1, 2, 3, 4, 5, 6, 7, 8];
 export const columns = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -28,6 +28,17 @@ export const columnMap: { [id: number]: string } = {
   6: 'c',
   7: 'b',
   8: 'a'
+}
+
+export const reverseColumnMap: { [id: string]: number } = {
+  'h': 1,
+  'g': 2,
+  'f': 3,
+  'e': 4,
+  'd': 5,
+  'c': 6,
+  'b': 7,
+  'a': 8
 }
 
 export interface Position {

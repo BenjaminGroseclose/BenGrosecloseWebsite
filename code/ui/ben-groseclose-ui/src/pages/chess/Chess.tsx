@@ -41,14 +41,6 @@ interface ChessGameState {
 	checkingPieces: Piece[];
 }
 
-function getWindowDimensions() {
-	const { innerWidth: width, innerHeight: height } = window;
-	return {
-		width,
-		height
-	};
-}
-
 const ChessPage = () => {
 	let [gameState, setGameState] = useState<ChessGameState>({
 		turn: 1,
@@ -329,11 +321,21 @@ const ChessPage = () => {
 		});
 	};
 
-	const start = () => {
+	const start = (): void => {
 		setGameState({
 			...gameState,
 			state: GameState.NORMAL
 		});
+	};
+
+	const getRandomString = (): string => {
+		let randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		let result = '';
+		for (let i = 0; i < 8; i++) {
+			result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+		}
+
+		return result;
 	};
 
 	const DisplayGameInformation = () => {
@@ -404,9 +406,14 @@ const ChessPage = () => {
 					Chess
 				</Typography>
 				{gameState.state === GameState.NOT_STARTED ? (
-					<Button sx={{ marginLeft: '8px', height: '40px' }} color="primary" variant="outlined" onClick={start}>
-						Start
-					</Button>
+					<Box sx={{ display: 'flex', flexDirection: 'row' }}>
+						<Button sx={{ marginLeft: '8px', height: '40px' }} color="primary" variant="outlined" onClick={start}>
+							Start
+						</Button>
+						<Button sx={{ marginLeft: '8px', height: '40px' }} color="secondary" variant="outlined" href={`/chess/${getRandomString()}`}>
+							Online
+						</Button>
+					</Box>
 				) : (
 					<span></span>
 				)}

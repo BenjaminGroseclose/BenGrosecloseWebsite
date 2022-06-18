@@ -8,43 +8,45 @@ import { useState, useEffect } from 'react';
 import MobileMenu from './shared/components/mobile-menu/MobileMenu';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ChessPage from './pages/chess/Chess';
+import OnlineChessPage from './pages/chess/OnlineChess';
 
 function App() {
-  const [isDesktop, setIsDesktop] = useState(false);
-  useEffect(() => {
-    const media = window.matchMedia('(min-width: 900px)');
-    const listener = () => setIsDesktop(media.matches);
-    listener();
-    window.addEventListener('resize', listener);
+	const [isDesktop, setIsDesktop] = useState(false);
+	useEffect(() => {
+		const media = window.matchMedia('(min-width: 900px)');
+		const listener = () => setIsDesktop(media.matches);
+		listener();
+		window.addEventListener('resize', listener);
 
-    return () => window.removeEventListener('resize', listener);
-  }, [isDesktop]);
+		return () => window.removeEventListener('resize', listener);
+	}, [isDesktop]);
 
-  const theme = createTheme({
-    palette: {
-      primary: deepOrange,
-      mode: 'light'
-    }
-  })
+	const theme = createTheme({
+		palette: {
+			primary: deepOrange,
+			mode: 'light'
+		}
+	});
 
-  return (
-    <Box id="App">
-      <ThemeProvider theme={theme}>
-        { isDesktop ? <MainMenu/> : <MobileMenu /> }
-        
-        <Box sx={{ padding: '80px 3% 0 3%'}}>
-          <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/resume" element={<Resume />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="/chess" element={<ChessPage />} />
-            </Routes>
-          </BrowserRouter>
-        </Box>
-      </ThemeProvider>
-    </Box>
-  );
+	return (
+		<Box id="App">
+			<ThemeProvider theme={theme}>
+				{isDesktop ? <MainMenu /> : <MobileMenu />}
+
+				<Box sx={{ padding: '80px 3% 0 3%' }}>
+					<BrowserRouter>
+						<Routes>
+							<Route path="/" element={<Home />} />
+							<Route path="/resume" element={<Resume />} />
+							<Route path="/projects" element={<Projects />} />
+							<Route path="/chess" element={<ChessPage />} />
+							<Route path="chess/:gameId" element={<OnlineChessPage />} />
+						</Routes>
+					</BrowserRouter>
+				</Box>
+			</ThemeProvider>
+		</Box>
+	);
 }
 
 export default App;
