@@ -47,3 +47,39 @@ jobs:
           push: true
           tags: ${{ steps.backend-meta.outputs.tags }}
           labels: ${{ steps.backend-meta.outputs.labels }}
+
+  deploy:
+    needs: push_to_repository
+    name: Deploy to Azure Container Apps
+    runs-on: ubuntu-latest
+    steps:
+        - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Frontend to Container Apps
+        uses: "azure/aci-deploy@v1"
+        with:
+          resource-group: Personal
+          dns-name-label: main
+          image: benjamingroseclose/bengroseclose_website_frontend:latest
+          cpu: 0.5 #Optional
+          memory: 1.0 #Optional
+          name: bengroseclose-website
+          location: "east us"
+          os-type: Linux
+          ports: 80
+
+      - name: Deploy Backend to Conatiner Apps
+        uses: "azure/aci-deploy@v1"
+        with:
+          resource-group: Personal
+          dns-name-label: main
+          image: benjamingroseclose/bengroseclose_website_backend:latest
+          cpu: 0.5 #Optional
+          memory: 1.0 #Optional
+          name: bengroseclose-website
+          location: "east us"
+          os-type: Linux
+          ports: 5000
