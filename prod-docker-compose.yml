@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  backend:
+    container_name: backend
+    image: benjamingroseclose/bengroseclose_website_backend:latest
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - ASPNETCORE_ENVIRONMENT=Production
+    networks:
+      - main_network
+  frontend:
+    container_name: frontend
+    image: benjamingroseclose/bengroseclose_website_frontend:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - main_network
+    environment:
+      - WDS_SOCKET_PORT=0
+
+networks:
+  main:
+    name: main_network
+    

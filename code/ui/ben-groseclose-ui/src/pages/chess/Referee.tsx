@@ -1,4 +1,3 @@
-import { ConnectingAirportsOutlined } from '@mui/icons-material';
 import { GameState, Piece, PieceType, Position, TeamType, columns, rows } from './Constants';
 import { possibleBishopMovement } from './rules/Bishop';
 import { onSameTile } from './rules/CommonRules';

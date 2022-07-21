@@ -59,7 +59,7 @@ const ChessPage = () => {
 	let [openDialog, setOpenDialog] = useState<boolean>(false);
 	let [chessNotation, setChessNotation] = useState<string[]>([]);
 
-	const { height, width } = useWindowDimensions();
+	const { width } = useWindowDimensions();
 	const referee = new Referee();
 
 	const onTileClick = useCallback(

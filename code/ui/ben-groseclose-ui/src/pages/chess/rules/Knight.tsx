@@ -1,5 +1,5 @@
 import { columns, Piece, Position, rows } from '../Constants';
-import { isTileFree, isTileFreeOrOpponent, isTileTakenByOpponent } from './CommonRules';
+import { isTileFreeOrOpponent } from './CommonRules';
 
 export const possibleKnightMovement = (currentPiece: Piece, activePieces: Piece[]): Position[] => {
 	let positions: Position[] = [];

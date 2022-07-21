@@ -65,7 +65,7 @@ const OnlineChessPage = () => {
 			connection.stop();
 		} else {
 			const newConnection = new HubConnectionBuilder()
-				.withUrl('http://localhost:5000/hubs/chess') // TODO: Handle route dynamically
+				.withUrl('http://backend:5000/hubs/chess') // TODO: Handle route dynamically
 				.withAutomaticReconnect()
 				.build();
 
@@ -480,7 +480,7 @@ const OnlineChessPage = () => {
 				{gameStatus === GameState.NOT_STARTED ? (
 					<Box sx={{ display: 'flex', flexDirection: 'row' }}>
 						<Button sx={{ marginLeft: '8px', height: '40px' }} color="primary" variant="outlined" onClick={start}>
-							Start
+							Start Test
 						</Button>
 						<Button sx={{ marginLeft: '8px', height: '40px' }} color="secondary" variant="outlined" href="/chess">
 							Offline

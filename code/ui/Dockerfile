@@ -8,8 +8,5 @@ COPY ben-groseclose-ui/package.json ben-groseclose-ui/package-lock.json ./
 RUN npm install
 
 COPY ./ben-groseclose-ui/ . 
-RUN cd
 
-CMD ["npm", "start"]
-
-EXPOSE 3000
+CMD ["npm", "run", "start:prod"]
