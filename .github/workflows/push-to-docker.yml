@@ -35,7 +35,7 @@ jobs:
           labels: ${{ steps.frontend-meta.outputs.labels }}
 
       - name: Extract metadata (tags, labels) for Docker - Backend
-        id: frontend-meta
+        id: backend-meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: benjamingroseclose/bengroseclose_website_backend
@@ -45,5 +45,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.frontend-meta.outputs.tags }}
-          labels: ${{ steps.frontend-meta.outputs.labels }}
+          tags: ${{ steps.backend-meta.outputs.tags }}
+          labels: ${{ steps.backend-meta.outputs.labels }}
