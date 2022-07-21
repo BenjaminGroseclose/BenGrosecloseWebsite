@@ -69,12 +69,12 @@ jobs:
             az containerapp update \
               --name bengroseclose-website \
               --resource-group Personal \
-              --container-name frontend
-              --cpu 0.5
-              --image benjamingroseclose/bengroseclose_website_frontend:latest
-              --memory 1
-              --tags 'cost-center=personal' 'application=BenGrosecloseWebsite' 'deployment-type=auto'
-              --min-replicas 0
+              --container-name frontend \
+              --cpu 0.5 \
+              --image benjamingroseclose/bengroseclose_website_frontend:latest \
+              --memory 1 \
+              --tags 'cost-center=personal' 'application=BenGrosecloseWebsite' 'deployment-type=auto' \
+              --min-replicas 0 \
               --max-replicas 2
 
       - name: Deploy Backend to Conatiner Apps
@@ -85,10 +85,10 @@ jobs:
             az containerapp update \
               --name bengroseclose-website \
               --resource-group Personal \
-              --container-name backend
-              --cpu 0.5
-              --image benjamingroseclose/bengroseclose_website_backend:latest
-              --memory 1
-              --tags 'cost-center=personal' 'application=BenGrosecloseWebsite' 'deployment-type=auto'
-              --min-replicas 0
+              --container-name backend \
+              --cpu 0.5 \
+              --image benjamingroseclose/bengroseclose_website_backend:latest \
+              --memory 1 \
+              --tags 'cost-center=personal' 'application=BenGrosecloseWebsite' 'deployment-type=auto' \
+              --min-replicas 0 \
               --max-replicas 2
