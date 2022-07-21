@@ -43,7 +43,7 @@ jobs:
       - name: Build and push Docker image - Backend
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: ./code/backend/..
+          context: ./code/backend/.
           push: true
           tags: ${{ steps.backend-meta.outputs.tags }}
           labels: ${{ steps.backend-meta.outputs.labels }}

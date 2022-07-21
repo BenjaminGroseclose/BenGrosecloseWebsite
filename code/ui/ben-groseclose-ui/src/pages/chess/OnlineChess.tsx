@@ -480,7 +480,7 @@ const OnlineChessPage = () => {
 				{gameStatus === GameState.NOT_STARTED ? (
 					<Box sx={{ display: 'flex', flexDirection: 'row' }}>
 						<Button sx={{ marginLeft: '8px', height: '40px' }} color="primary" variant="outlined" onClick={start}>
-							Start Test
+							Start
 						</Button>
 						<Button sx={{ marginLeft: '8px', height: '40px' }} color="secondary" variant="outlined" href="/chess">
 							Offline
