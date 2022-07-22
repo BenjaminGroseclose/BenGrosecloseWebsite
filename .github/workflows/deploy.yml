@@ -61,22 +61,6 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy Frontend to Container Apps
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az config set extension.use_dynamic_install=yes_without_prompt
-            az containerapp update \
-              --name bengroseclose-website \
-              --resource-group Personal \
-              --container-name frontend \
-              --cpu 0.5 \
-              --image benjamingroseclose/bengroseclose_website_frontend:latest \
-              --memory 1 \
-              --tags 'cost-center=personal' 'application=BenGrosecloseWebsite' 'deployment-type=auto' \
-              --min-replicas 0 \
-              --max-replicas 2
-
       - name: Deploy Backend to Conatiner Apps
         uses: azure/CLI@v1
         with:
@@ -90,5 +74,23 @@ jobs:
               --image benjamingroseclose/bengroseclose_website_backend:latest \
               --memory 1 \
               --tags 'cost-center=personal' 'application=BenGrosecloseWebsite' 'deployment-type=auto' \
-              --min-replicas 0 \
-              --max-replicas 2
+              --min-replicas 1 \
+              --max-replicas 1
+
+      - name: Deploy Frontend to Container Apps
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            API_BASE_URL=$(az containerapp show --resource-group personal --name backend --query properties.configuration.ingress.fqdn -o tsv)
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az containerapp update \
+              --name bengroseclose-website \
+              --resource-group Personal \
+              --container-name frontend \
+              --cpu 0.5 \
+              --image benjamingroseclose/bengroseclose_website_frontend:latest \
+              --env-vars API_BASE_URL=https://$API_BASE_URL \
+              --memory 1 \
+              --tags 'cost-center=personal' 'application=BenGrosecloseWebsite' 'deployment-type=auto' \
+              --min-replicas 1 \
+              --max-replicas 1
