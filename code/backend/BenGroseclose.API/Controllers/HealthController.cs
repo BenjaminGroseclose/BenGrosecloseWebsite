@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BenGroseclose.API.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class HealthController : Controller
     {
         public HealthController() { }
