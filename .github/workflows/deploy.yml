@@ -61,6 +61,10 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - uses: actions/checkout@v2
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
       - name: Deploy Backend to Conatiner Apps
         uses: azure/CLI@v1
         with:
@@ -69,7 +73,7 @@ jobs:
             az containerapp update \
               --name bengroseclose-website-backend \
               --resource-group Personal \
-              --container-name ${{ env.RELEASE_VERSION }} \
+              --container-name $RELEASE_VERSION \
               --cpu 0.5 \
               --image benjamingroseclose/bengroseclose_website_backend:latest \
               --memory 1 \
@@ -86,7 +90,7 @@ jobs:
             az containerapp update \
               --name bengroseclose-website-frontend \
               --resource-group Personal \
-              --container-name ${{ env.RELEASE_VERSION }} \
+              --container-name $RELEASE_VERSION \
               --cpu 0.5 \
               --image benjamingroseclose/bengroseclose_website_frontend:latest \
               --set-env-vars API_BASE_URL=https://$API_BASE_URL \
