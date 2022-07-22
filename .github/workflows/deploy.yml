@@ -93,7 +93,7 @@ jobs:
               --container-name $RELEASE_VERSION \
               --cpu 0.5 \
               --image benjamingroseclose/bengroseclose_website_frontend:latest \
-              --set-env-vars API_BASE_URL=https://$API_BASE_URL \
+              --set-env-vars REACT_APP_API_BASE_URL=https://$API_BASE_URL \
               --memory 1 \
               --tags 'cost-center=personal' 'application=BenGrosecloseWebsite' 'deployment-type=auto' \
               --min-replicas 1 \

@@ -9,6 +9,6 @@ RUN npm install
 
 COPY ./ben-groseclose-ui/ . 
 
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start"]
 
-EXPOSE 80
+EXPOSE 3000
