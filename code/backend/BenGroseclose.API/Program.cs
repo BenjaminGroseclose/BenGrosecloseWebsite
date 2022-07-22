@@ -20,7 +20,8 @@ builder.Services.AddCors(options =>
     {
         policy.AllowAnyHeader()
             .AllowAnyMethod()
-            .WithOrigins("http://localhost:3000", "http://localhost:80", "https://bengroseclose.com")
+            //.WithOrigins("http://localhost:3000", "http://localhost:80", "https://bengroseclose.com", )
+            .AllowAnyOrigin() // TODO: Remove this
             .AllowCredentials();
     });
 });
