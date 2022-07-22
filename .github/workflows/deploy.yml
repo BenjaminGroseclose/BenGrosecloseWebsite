@@ -81,7 +81,7 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            API_BASE_URL=$(az containerapp show --resource-group personal --name backend --query properties.configuration.ingress.fqdn -o tsv)
+            API_BASE_URL=$(az containerapp show --resource-group personal --name bengroseclose-website --query properties.configuration.ingress.fqdn -o tsv)
             az config set extension.use_dynamic_install=yes_without_prompt
             az containerapp update \
               --name bengroseclose-website \
