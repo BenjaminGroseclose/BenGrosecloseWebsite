@@ -73,7 +73,7 @@ jobs:
             az containerapp update \
               --name bengroseclose-website-backend \
               --resource-group Personal \
-              --container-name $RELEASE_VERSION \
+              --container-name main \
               --cpu 0.5 \
               --image benjamingroseclose/bengroseclose_website_backend:latest \
               --memory 1 \
@@ -90,7 +90,7 @@ jobs:
             az containerapp update \
               --name bengroseclose-website-frontend \
               --resource-group Personal \
-              --container-name $RELEASE_VERSION \
+              --container-name main \
               --cpu 0.5 \
               --image benjamingroseclose/bengroseclose_website_frontend:latest \
               --set-env-vars REACT_APP_API_BASE_URL=https://$API_BASE_URL \
