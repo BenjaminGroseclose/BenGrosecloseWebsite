@@ -14,4 +14,4 @@ WORKDIR /app
 COPY --from=build /Backend/out .
 ENTRYPOINT ["dotnet", "BenGroseclose.API.dll"]
 
-EXPOSE 80
+EXPOSE 5000

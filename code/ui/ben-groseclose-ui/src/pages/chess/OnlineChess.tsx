@@ -65,7 +65,7 @@ const OnlineChessPage = () => {
 			connection.stop();
 		} else {
 			const newConnection = new HubConnectionBuilder()
-				.withUrl('http://backend:5000/hubs/chess') // TODO: Handle route dynamically
+				.withUrl('http://localhost:5000/hubs/chess') // TODO: Handle route dynamically
 				.withAutomaticReconnect()
 				.build();
 
