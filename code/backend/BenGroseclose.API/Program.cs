@@ -20,8 +20,8 @@ builder.Services.AddCors(options =>
     {
         policy.AllowAnyHeader()
             .AllowAnyMethod()
-            //.WithOrigins("http://localhost:3000", "http://localhost:80", "https://bengroseclose.com", )
-            .AllowAnyOrigin() // TODO: Remove this
+            .WithOrigins("http://localhost:3000", "http://localhost:80", "https://bengroseclose.com", "https://bengroseclose-website-frontend.salmonwater-d1a7f0b1.eastus.azurecontainerapps.io/")
+            //.AllowAnyOrigin() // TODO: Remove this
             .AllowCredentials();
     });
 });
@@ -39,7 +39,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-//app.UseCors("ClientPermission");
+app.UseCors("ClientPermission");
 
 app.MapControllers();
 app.MapHub<ChessHub>("/hubs/chess");
