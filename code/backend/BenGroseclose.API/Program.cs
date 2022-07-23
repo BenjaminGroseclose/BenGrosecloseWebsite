@@ -19,7 +19,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("ClientPermission", policy =>
     {
         policy
-            .WithOrigins("http://localhost:3000", "http://localhost:80", "https://bengroseclose.com", "https://bengroseclose-website-frontend.salmonwater-d1a7f0b1.eastus.azurecontainerapps.io/")
+            .AllowAnyOrigin()
+            //.WithOrigins("http://localhost:3000", "http://localhost:80", "https://bengroseclose.com", "https://bengroseclose-website-frontend.salmonwater-d1a7f0b1.eastus.azurecontainerapps.io/")
             .AllowAnyHeader()
             .AllowAnyMethod()
             //.AllowAnyOrigin() // TODO: Remove this
