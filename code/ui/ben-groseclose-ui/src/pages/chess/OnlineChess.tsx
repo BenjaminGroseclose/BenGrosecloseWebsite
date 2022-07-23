@@ -64,7 +64,7 @@ const OnlineChessPage = () => {
 			connection.send('LeaveGame', gameId);
 			connection.stop();
 		} else {
-			const newConnection = new HubConnectionBuilder().withUrl(`${process.env.REACT_APP_API_BASE_URL}/hubs/chess'`).withAutomaticReconnect().build();
+			const newConnection = new HubConnectionBuilder().withUrl(`${process.env.REACT_APP_API_BASE_URL}/hubs/chess`).withAutomaticReconnect().build();
 
 			setConnection(newConnection);
 		}
