@@ -75,7 +75,7 @@ jobs:
               --resource-group Personal \
               --container-name main \
               --cpu 0.5 \
-              --image benjamingroseclose/bengroseclose_website_backend:latest \
+              --image benjamingroseclose/bengroseclose_website_backend:$RELEASE_VERSION \
               --memory 1 \
               --tags 'cost-center=personal' 'application=BenGrosecloseWebsite' 'deployment-type=auto' \
               --min-replicas 1 \
@@ -92,7 +92,7 @@ jobs:
               --resource-group Personal \
               --container-name main \
               --cpu 0.5 \
-              --image benjamingroseclose/bengroseclose_website_frontend:latest \
+              --image benjamingroseclose/bengroseclose_website_frontend:$RELEASE_VERSION \
               --set-env-vars REACT_APP_API_BASE_URL=https://$API_BASE_URL \
               --memory 1 \
               --tags 'cost-center=personal' 'application=BenGrosecloseWebsite' 'deployment-type=auto' \
