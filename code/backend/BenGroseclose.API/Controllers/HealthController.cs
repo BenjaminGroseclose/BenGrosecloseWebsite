@@ -10,7 +10,7 @@ namespace BenGroseclose.API.Controllers
         [HttpGet]
         public IActionResult Health()
         {
-            return this.Ok("Healthy");
+            return this.Ok("Healthy 111");
         }
     }
 }

@@ -14,19 +14,6 @@ builder.Services.AddSwaggerGen();
 // Hubs
 builder.Services.AddSignalR();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("ClientPermission", policy =>
-    {
-        policy
-            .AllowAnyOrigin()
-            //.WithOrigins("http://localhost:3000", "http://localhost:80", "https://bengroseclose.com", "https://bengroseclose-website-frontend.salmonwater-d1a7f0b1.eastus.azurecontainerapps.io/")
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-        //.AllowAnyOrigin() // TODO: Remove this
-    });
-});
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,13 +23,25 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(builder =>
+{
+    builder
+        //.WithOrigins("http://localhost:3000")
+
+        .SetIsOriginAllowed(hostName => true)
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        //.AllowAnyOrigin()
+        .AllowCredentials();
+});
+
 app.UseHttpsRedirection();
+
+app.MapControllers();
+app.UseRouting();
 
 app.UseAuthorization();
 
-app.UseCors("ClientPermission");
-
-app.MapControllers();
 app.MapHub<ChessHub>("/hubs/chess");
 
 app.Run();
