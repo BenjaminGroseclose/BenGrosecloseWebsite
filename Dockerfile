@@ -2,6 +2,8 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
 
 RUN apk add --update nodejs npm
 
+RUN node --version
+
 #Frontend Build
 COPY BenGrosecloseWebsite/ClientApp/package.json BenGrosecloseWebsite/ClientApp/package-lock.json ./
 RUN npm install

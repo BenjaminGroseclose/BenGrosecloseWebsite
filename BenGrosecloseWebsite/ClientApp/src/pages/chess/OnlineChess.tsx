@@ -64,10 +64,7 @@ const OnlineChessPage = () => {
 			connection.send('LeaveGame', gameId);
 			connection.stop();
 		} else {
-			const newConnection = new HubConnectionBuilder()
-				.withUrl('/hubs/chess')
-				.withAutomaticReconnect()
-				.build();
+			const newConnection = new HubConnectionBuilder().withUrl('/hubs/chess').withAutomaticReconnect().build();
 
 			setConnection(newConnection);
 		}
@@ -478,7 +475,7 @@ const OnlineChessPage = () => {
 				{gameStatus === GameState.NOT_STARTED ? (
 					<Box sx={{ display: 'flex', flexDirection: 'row' }}>
 						<Button sx={{ marginLeft: '8px', height: '40px' }} color="primary" variant="outlined" onClick={start}>
-							Start Test
+							Start
 						</Button>
 						<Button sx={{ marginLeft: '8px', height: '40px' }} color="secondary" variant="outlined" href="/chess">
 							Offline
