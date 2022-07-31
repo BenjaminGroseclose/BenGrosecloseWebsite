@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Ben Groseclose Website",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/BenGrosecloseWebsite/bin/Debug/net6.0/BenGrosecloseWebsite.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/BenGrosecloseWebsite"
+    }
+  ],
+  "compounds": []
+}
