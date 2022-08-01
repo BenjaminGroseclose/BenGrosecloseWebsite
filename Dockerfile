@@ -5,10 +5,10 @@ RUN apk add --update nodejs npm
 RUN node --version
 
 #Frontend Build
-COPY BenGrosecloseWebsite/ClientApp/package.json BenGrosecloseWebsite/ClientApp/package-lock.json ./
-RUN npm install
+# COPY BenGrosecloseWebsite/ClientApp/package.json BenGrosecloseWebsite/ClientApp/package-lock.json ./
+# RUN npm install
 
-COPY ./BenGrosecloseWebsite/ClientApp/ . 
+# COPY ./BenGrosecloseWebsite/ClientApp/ . 
 
 #Backend Build
 WORKDIR /Backend
