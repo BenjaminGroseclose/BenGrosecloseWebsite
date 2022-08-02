@@ -6,10 +6,6 @@ on:
   release:
     types: [published]
 
-  # Allow mannually trigger
-  # TODO: Remove
-  workflow_dispatch:
-
 env:
   AZURE_APP_NAME: bengroseclose-website
 
@@ -41,10 +37,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Docker Logout
-        run: |
-          docker logout
-
   deploy:
     needs: build
     name: Deploy to Azure App Service
@@ -75,7 +67,3 @@ jobs:
       - name: Azure Logout
         run: |
           az logout
-
-      - name: Docker Logout
-        run: |
-          docker logout
