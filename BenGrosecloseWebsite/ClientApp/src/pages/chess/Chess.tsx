@@ -115,7 +115,7 @@ const ChessPage = () => {
 				let movablePositions: Position[] = [];
 
 				if (piece.pieceType === PieceType.KING) {
-					movablePositions = referee.moveableKingPositions(activePieces, piece);
+					movablePositions = referee.moveableKingPositions(activePieces, piece, gameState.state);
 				} else {
 					movablePositions = referee.moveablePositions(activePieces, piece, false, false, true);
 				}
