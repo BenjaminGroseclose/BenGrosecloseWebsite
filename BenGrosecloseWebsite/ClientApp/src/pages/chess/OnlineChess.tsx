@@ -15,7 +15,7 @@ import {
 } from './rules/King';
 import useWindowDimensions from './WindowDimensions';
 import { useParams } from 'react-router-dom';
-import { HubConnection, HubConnectionBuilder, HubConnectionState, LogLevel } from '@microsoft/signalr';
+import { HubConnection, HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
 
 /*
 	BUGS
@@ -176,8 +176,6 @@ const OnlineChessPage = () => {
 		let enemyPieceIndex = tempPieces.findIndex((p) => p.position.column === position.column && p.position.row === position.row);
 
 		if (enemyPieceIndex !== -1) {
-			console.log('enemy taken');
-
 			if (tempSelectedPiece.team === TeamType.WHITE) {
 				setBlackGraveyard([...blackGraveyard, tempPieces[enemyPieceIndex]]);
 			} else {
@@ -221,7 +219,7 @@ const OnlineChessPage = () => {
 				let movablePositions: Position[] = [];
 
 				if (piece.pieceType === PieceType.KING) {
-					movablePositions = referee.moveableKingPositions(activePieces, piece);
+					movablePositions = referee.moveableKingPositions(activePieces, piece, gameStatus);
 				} else {
 					movablePositions = referee.moveablePositions(activePieces, piece, false, false, true);
 				}

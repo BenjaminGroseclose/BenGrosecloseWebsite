@@ -8,8 +8,16 @@ import { possibleQueenMovement } from './rules/Queen';
 import { possibleRookMovement } from './rules/Rook';
 
 export default class Referee {
-	moveableKingPositions = (activePieces: Piece[], piece: Piece): Position[] => {
-		return possibleKingMovement(piece, activePieces);
+	moveableKingPositions = (activePieces: Piece[], piece: Piece, gameState: GameState): Position[] => {
+		let isChecked = false;
+
+		if (piece.team === TeamType.BLACK) {
+			isChecked = gameState === GameState.BLACK_CHECKED;
+		} else {
+			isChecked = gameState === GameState.WHITE_CHECKED;
+		}
+
+		return possibleKingMovement(piece, activePieces, isChecked);
 	};
 
 	moveablePositions = (
@@ -170,14 +178,14 @@ export default class Referee {
 				gameState = GameState.WHITE_CHECKED;
 			}
 
-			const kingMoves = possibleKingMovement(checkedKing, activePieces);
+			const kingMoves = possibleKingMovement(checkedKing, activePieces, true);
 
 			// King can't move checking for block / captures
 			if (kingMoves && kingMoves.length === 0) {
 				const checkedKingPieces = [...activePieces.filter((x) => x.team === checkedKing.team)];
 				let canBlock = false;
 
-				checkedKingPieces.forEach((piece: Piece, index: number) => {
+				checkedKingPieces.forEach((piece: Piece) => {
 					let movingPiecePositions = this.moveablePositions(activePieces, piece, false, false, false);
 
 					movingPiecePositions = this.filterToRemoveCheckedStatus(movingPiecePositions, activePieces, checkingPieces);

@@ -10,7 +10,7 @@ export const WHITE_KING_STARTING_SQUARE: Position = { column: 5, row: 1 };
 export const WHITE_ROOK_LEFT_STARTING_SQUARE: Position = { column: 1, row: 1 };
 export const WHITE_ROOK_RIGHT_STARTING_SQUARE: Position = { column: 8, row: 1 };
 
-export const possibleKingMovement = (king: Piece, activePieces: Piece[]): Position[] => {
+export const possibleKingMovement = (king: Piece, activePieces: Piece[], isChecked: boolean): Position[] => {
 	const referee = new Referee();
 	let positions: Position[] = [];
 
@@ -69,7 +69,7 @@ export const possibleKingMovement = (king: Piece, activePieces: Piece[]): Positi
 	// Next step confirm that the path to the rook is clear
 	if (king.team === TeamType.BLACK) {
 		// Can not castle unless on starting square
-		if (onSameTile(king.position, BLACK_KING_STARTING_SQUARE)) {
+		if (onSameTile(king.position, BLACK_KING_STARTING_SQUARE) && !isChecked) {
 			const blackRooks = activePieces.filter((x) => x.pieceType === PieceType.ROOK && x.team === TeamType.BLACK);
 
 			if (
@@ -93,7 +93,7 @@ export const possibleKingMovement = (king: Piece, activePieces: Piece[]): Positi
 		}
 	} else {
 		// Can not castle unless on starting square
-		if (onSameTile(king.position, WHITE_KING_STARTING_SQUARE)) {
+		if (onSameTile(king.position, WHITE_KING_STARTING_SQUARE) && !isChecked) {
 			const whiteRooks = activePieces.filter((x) => x.pieceType === PieceType.ROOK && x.team === TeamType.WHITE);
 
 			if (

@@ -9,3 +9,4 @@ Designed to be a real chess game that will prompt when checkmate occurs.
 Known bugs:
 
 - Promotion has not be implemented
+- King can castle when checked
