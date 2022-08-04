@@ -280,7 +280,7 @@ const OnlineChessPage = () => {
 								notation = 'N';
 								break;
 							case PieceType.BISHOP:
-								notation = 'G';
+								notation = 'B';
 								break;
 							case PieceType.ROOK:
 								notation = 'R';
@@ -406,6 +406,7 @@ const OnlineChessPage = () => {
 	const DisplayGameInformation = () => {
 		return (
 			<Box id="game-information">
+				<Typography>Instructions: Send the same link to another player to play with them.</Typography>
 				<Typography>Team Turn: {team === TeamType.WHITE ? 'White' : 'Black'}</Typography>
 				<Typography>Turn: {turn}</Typography>
 

@@ -79,7 +79,7 @@ const ChessPage = () => {
 							notationToAdd = 'N';
 							break;
 						case PieceType.BISHOP:
-							notationToAdd = 'G';
+							notationToAdd = 'B';
 							break;
 						case PieceType.ROOK:
 							notationToAdd = 'R';
