@@ -1,11 +1,19 @@
-import { AppBar, Toolbar, Typography, IconButton, Drawer, Button, Divider } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Drawer, Button, Divider, PaletteMode } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { IMainMenuProps } from '../main-menu/MainMenu';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-const MobileMenu = () => {
+export interface IMobileMenuProps {
+	mode: PaletteMode;
+	colorMode: { toggleColorMode(): void };
+}
+
+const MobileMenu = ({ mode, colorMode }: IMainMenuProps) => {
 	const [openDrawer, setOpenDrawer] = useState(false);
 
 	return (
@@ -36,6 +44,9 @@ const MobileMenu = () => {
 						Chess
 					</Button>
 					<Divider sx={{ marginTop: 1, marginBottom: 1 }} />
+					<IconButton onClick={colorMode.toggleColorMode} color="inherit">
+						{mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+					</IconButton>
 					<IconButton href="https://github.com/BenjaminGroseclose" target="_blank" color="inherit">
 						<GitHubIcon />
 					</IconButton>
