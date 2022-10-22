@@ -1,10 +1,17 @@
+using BenGrosecloseWebsite.API;
 using BenGrosecloseWebsite.Hubs;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllersWithViews();
+
+// APIs
+builder.Services.AddRefitClient<ISportsDataAPI>()
+    .ConfigureHttpClient(x => x.BaseAddress = new Uri("https://api.sportsdata.io/v3"))
+    .AddHttpMessageHandler(() => new AppendAPIKeyHandler("3856c8fd884e47de9dca01a8427bf3b1"));
+// TODO: Remove Key and pull from Env var instead
 
 // Hubs
 builder.Services.AddSignalR();

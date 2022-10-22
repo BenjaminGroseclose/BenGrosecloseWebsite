@@ -1,0 +1,31 @@
+export interface ITeamStanding {
+	season: number;
+	seasonType: number;
+	teamID: number;
+	key: string;
+	city: string;
+	name: string;
+	conference: string;
+	division: string;
+	wins: number;
+	losses: number;
+	percentage: number;
+	conferenceWins: number;
+	conferenceLosses: number;
+	divisionWins: number;
+	divisionLosses: number;
+	homeWins: number;
+	homeLosses: number;
+	awayWins: number;
+	awayLosses: number;
+	lastTenWins: number;
+	lastTenLosses: number;
+	pointsPerGameFor: number;
+	pointsPerGameAgainst: number;
+	streak: number;
+	gamesBack: number;
+	streakDescription: string;
+	globalTeamID: number;
+	conferenceRank: number;
+	divisionRank: number;
+}

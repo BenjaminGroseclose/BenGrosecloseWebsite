@@ -43,6 +43,9 @@ const MobileMenu = ({ mode, colorMode }: IMainMenuProps) => {
 					<Button href="/chess" color="inherit">
 						Chess
 					</Button>
+					<Button href="/ringer" color="inherit">
+						Ringer
+					</Button>
 					<Divider sx={{ marginTop: 1, marginBottom: 1 }} />
 					<IconButton onClick={colorMode.toggleColorMode} color="inherit">
 						{mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
