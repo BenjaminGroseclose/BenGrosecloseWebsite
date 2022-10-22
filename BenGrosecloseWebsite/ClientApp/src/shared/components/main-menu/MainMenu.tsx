@@ -30,6 +30,9 @@ const MainMenu = ({ mode, colorMode }: IMainMenuProps) => {
 					<Button href="/chess" color="inherit">
 						Chess
 					</Button>
+					<Button href="/ringer" color="inherit">
+						Ringer
+					</Button>
 
 					<IconButton sx={{ marginLeft: 'auto' }} onClick={colorMode.toggleColorMode} color="inherit">
 						{mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}

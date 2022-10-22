@@ -9,6 +9,7 @@ import MobileMenu from './shared/components/mobile-menu/MobileMenu';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ChessPage from './pages/chess/Chess';
 import OnlineChessPage from './pages/chess/OnlineChess';
+import Ringer from './pages/ringer/Ringer';
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -66,7 +67,7 @@ function App() {
 				<ThemeProvider theme={theme}>
 					{isDesktop ? <MainMenu mode={mode} colorMode={colorMode} /> : <MobileMenu mode={mode} colorMode={colorMode} />}
 
-					<Paper sx={{ padding: '80px 3% 0 3%', height: 'calc(100vh - 80px)' }}>
+					<Paper sx={{ padding: '80px 3% 0 3%', height: 'fit-content' }}>
 						<BrowserRouter basename={url}>
 							<Routes>
 								<Route path="/" element={<Home />} />
@@ -74,6 +75,7 @@ function App() {
 								<Route path="/projects" element={<Projects />} />
 								<Route path="/chess" element={<ChessPage />} />
 								<Route path="/chess/:gameId" element={<OnlineChessPage />} />
+								<Route path="/ringer" element={<Ringer />} />
 							</Routes>
 						</BrowserRouter>
 					</Paper>
