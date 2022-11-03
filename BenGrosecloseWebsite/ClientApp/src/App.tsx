@@ -67,7 +67,7 @@ function App() {
 				<ThemeProvider theme={theme}>
 					{isDesktop ? <MainMenu mode={mode} colorMode={colorMode} /> : <MobileMenu mode={mode} colorMode={colorMode} />}
 
-					<Paper sx={{ padding: '80px 3% 0 3%', height: 'fit-content' }}>
+					<Paper sx={{ padding: '80px 3% 0 3%', height: 'calc(100vh - 80px)' }}>
 						<BrowserRouter basename={url}>
 							<Routes>
 								<Route path="/" element={<Home />} />

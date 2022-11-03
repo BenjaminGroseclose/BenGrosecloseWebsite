@@ -14,6 +14,7 @@ import {
 	WHITE_ROOK_RIGHT_STARTING_SQUARE
 } from './rules/King';
 import useWindowDimensions from './WindowDimensions';
+import { wrap } from 'module';
 
 /*
 	BUGS
@@ -338,6 +339,20 @@ const ChessPage = () => {
 		return result;
 	};
 
+	const notationMap = (notations: string[]): string => {
+		let retval = '';
+
+		notations.forEach((notation) => {
+			if (retval === '') {
+				retval = notation;
+			} else {
+				retval = retval + ' ' + notation;
+			}
+		});
+
+		return retval;
+	};
+
 	const DisplayGameInformation = () => {
 		return (
 			<Box id="game-information">
@@ -345,16 +360,8 @@ const ChessPage = () => {
 				<Typography>Turn: {gameState.turn}</Typography>
 
 				<Box sx={{ display: 'flex', flexDirection: 'column' }}>
-					<Box sx={{ display: 'flex', flexDirection: 'row', marginTop: '8px' }}>
-						{chessNotation?.map((notation: string, index: number) => {
-							return (
-								<Typography key={index} sx={{ marginRight: '4px' }}>
-									{notation}
-								</Typography>
-							);
-						})}
-					</Box>
-					<Box sx={{ display: 'flex', flexDirection: 'row' }}>
+					<Box sx={{ display: 'flex', flexDirection: 'row', marginTop: '8px' }}>{notationMap(chessNotation)}</Box>
+					<Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
 						{blackGraveyard.map((piece: Piece, index: number) => {
 							if (piece) {
 								return <img key={index} id={`${index}`} src={piece.image} alt={`Black Pieces ${piece.image} graveyard`} width={50} height={50} />;
@@ -363,7 +370,7 @@ const ChessPage = () => {
 							}
 						})}
 					</Box>
-					<Box sx={{ display: 'flex', flexDirection: 'row' }}>
+					<Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
 						{whiteGraveyard.map((piece: Piece, index: number) => {
 							if (piece) {
 								return <img key={index} id={`${index}`} src={piece.image} alt={`White Pieces ${piece.image} graveyard`} width={50} height={50} />;
@@ -442,7 +449,7 @@ const ChessPage = () => {
 						{gameState.state === GameState.NOT_STARTED ? (
 							<span></span>
 						) : (
-							<Box>
+							<Box sx={{ width: '200px' }}>
 								<Box sx={{ display: 'flex', flexDirection: width > 750 ? 'column' : 'row', marginTop: '8px' }}>
 									<IconButton onClick={flipBoard} color="primary">
 										Flip Board
