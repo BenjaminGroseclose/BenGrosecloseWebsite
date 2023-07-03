@@ -4,7 +4,6 @@ namespace BenGrosecloseWebsite.Hubs
 {
     public class ChessHub : Hub
     {
-
         public async Task CreateGame(string gameId)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, gameId);

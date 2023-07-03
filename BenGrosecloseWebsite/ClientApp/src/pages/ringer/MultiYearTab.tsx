@@ -1,10 +1,8 @@
-import { Box } from '@mui/system';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { ITeamStanding } from './models';
 import 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
-import { ScatterDataPoint } from 'chart.js/auto';
 
 interface IMultiYearStandings {
 	standings: ITeamStanding[];

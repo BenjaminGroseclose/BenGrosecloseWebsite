@@ -23,6 +23,7 @@ import { HubConnection, HubConnectionBuilder, HubConnectionState } from '@micros
 
 	FEATURES
 	Required (In priority)
+	- En passante
 	- Promotion
 	- Offer draws
 	- Surrender
@@ -75,8 +76,6 @@ const OnlineChessPage = () => {
 			connection
 				.start()
 				.then(() => {
-					console.log('Connected!');
-
 					connection.send('CreateGame', gameId);
 
 					connection.on('Notification', (message: string) => {
@@ -84,7 +83,6 @@ const OnlineChessPage = () => {
 					});
 
 					connection.on('StartGame', () => {
-						console.log('Updating game state! state');
 						setGameStatus(GameState.NORMAL);
 					});
 

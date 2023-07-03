@@ -9,3 +9,9 @@ Designed to be a real chess game that will prompt when checkmate occurs.
 Known bugs:
 
 - Promotion has not be implemented
+
+
+### Cert How To
+
+1. `certbot certonly -d bengroseclose.com --manual --preferred-challenges dns`
+2. Follow these steps from [Stack Overlfow](https://stackoverflow.com/questions/16480846/x-509-private-public-key)

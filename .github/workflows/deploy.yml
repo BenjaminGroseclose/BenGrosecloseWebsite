@@ -56,13 +56,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure Container Apps
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ env.AZURE_APP_NAME }}
-          slot-name: "production"
-          images: "benjamingroseclose/bengroseclose_website:latest"
+        run: az containerapp up -n bengroseclose-website /
+                                --image benjamingroseclose/bengroseclose_website:latest /
+                                --ingree external /
+                                --target-port 80 /
+                                --environment BenGrosecloseWebsiteEnvironment
 
       - name: Azure Logout
         run: |

@@ -14,7 +14,6 @@ import {
 	WHITE_ROOK_RIGHT_STARTING_SQUARE
 } from './rules/King';
 import useWindowDimensions from './WindowDimensions';
-import { wrap } from 'module';
 
 /*
 	BUGS
@@ -22,6 +21,7 @@ import { wrap } from 'module';
 
 	FEATURES
 	Required (In priority)
+	- En Passante
 	- Promotion
 	- Offer draws
 	- Surrender

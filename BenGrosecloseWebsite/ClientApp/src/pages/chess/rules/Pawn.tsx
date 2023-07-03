@@ -29,6 +29,8 @@ export const possiblePawnMovement = (currentPiece: Piece, activePieces: Piece[],
 		}
 	}
 
+	// En Passante
+
 	// Check attack moves
 	const columnIndex = columns.indexOf(currentPiece.position.column);
 	const attackPositionOne: Position = { column: columns[columnIndex - 1], row: normalMoveRow };
