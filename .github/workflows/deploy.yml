@@ -39,7 +39,7 @@ jobs:
 
   deploy:
     needs: build
-    name: Deploy to Azure App Service
+    name: Deploy to Azure Container Apps
     runs-on: ubuntu-latest
     environment:
       name: "production"
@@ -60,9 +60,11 @@ jobs:
         id: deploy-to-webapp
         run: az containerapp up -n bengroseclose-website /
                                 --image benjamingroseclose/bengroseclose_website:latest /
-                                --ingree external /
+                                --ingress external /
                                 --target-port 80 /
                                 --environment BenGrosecloseWebsiteEnvironment
+                                --resource-grou Personal
+                                --branch main
 
       - name: Azure Logout
         run: |
