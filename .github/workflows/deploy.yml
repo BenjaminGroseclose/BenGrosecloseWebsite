@@ -58,13 +58,7 @@ jobs:
 
       - name: Deploy to Azure Container Apps
         id: deploy-to-webapp
-        run: az containerapp up -n bengroseclose-website /
-                                --image benjamingroseclose/bengroseclose_website:latest /
-                                --ingress external /
-                                --target-port 80 /
-                                --environment BenGrosecloseWebsiteEnvironment /
-                                --resource-grou Personal / 
-                                --branch main
+        run: az containerapp up -n bengroseclose-website --image benjamingroseclose/bengroseclose_website:latest --ingress external --target-port 80 --environment BenGrosecloseWebsiteEnvironment --resource-grou Personal
 
       - name: Azure Logout
         run: |
