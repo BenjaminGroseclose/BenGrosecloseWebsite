@@ -62,8 +62,8 @@ jobs:
                                 --image benjamingroseclose/bengroseclose_website:latest /
                                 --ingress external /
                                 --target-port 80 /
-                                --environment BenGrosecloseWebsiteEnvironment
-                                --resource-grou Personal
+                                --environment BenGrosecloseWebsiteEnvironment /
+                                --resource-grou Personal / 
                                 --branch main
 
       - name: Azure Logout
