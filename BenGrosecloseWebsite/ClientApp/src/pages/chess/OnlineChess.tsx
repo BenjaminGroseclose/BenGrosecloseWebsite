@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material';
 import WifiProtectedSetupIcon from '@mui/icons-material/WifiProtectedSetup';
 import React, { useCallback, useEffect, useState } from 'react';
