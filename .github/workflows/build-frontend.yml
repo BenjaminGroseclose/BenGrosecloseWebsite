@@ -1,0 +1,35 @@
+name: Build & Test Frontend
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+env:
+  AZURE_APP_NAME: bengroseclose-website
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./BenGrosecloseWebsite/ClientApp
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.16.x"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
