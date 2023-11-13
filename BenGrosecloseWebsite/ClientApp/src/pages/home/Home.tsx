@@ -39,6 +39,12 @@ const Home = () => {
 			<Box>
 				<Typography variant="h5">Career</Typography>
 				<Box>
+					<Typography>
+						<i>Red Lion Software and Consulting</i>
+					</Typography>
+
+					<Typography variant="body1">What a great place to work, I really like this company!</Typography>
+
 					<Typography variant="subtitle1" sx={{ marginBottom: 2 }}>
 						<i>Spectrum Health</i>
 					</Typography>

@@ -10,7 +10,7 @@ interface IMultiYearStandings {
 }
 
 const MultiYearTab = () => {
-	let [winsOrLosses, setWinsOrLosses] = useState<'wins' | 'losses'>(); // TODO
+	let [winsOrLosses] = useState<'wins' | 'losses'>(); // TODO
 	let [teamStandings, setTeamStandings] = useState<ITeamStanding[]>();
 	let [teamIDs, setTeamIDs] = useState<number[]>([]);
 
