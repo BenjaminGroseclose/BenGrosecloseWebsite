@@ -10,7 +10,6 @@ namespace BenGrosecloseWebsite.Controllers
     public class SportsController : Controller
     {
         private const int CURRENT_YEAR = 2023;
-
         private readonly ISportsDataAPI sportsDataAPI;
 
         public SportsController(ISportsDataAPI sportsDataAPI)
